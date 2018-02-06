@@ -15,13 +15,11 @@ import java.util.concurrent.TimeUnit
 @SpringBootApplication()
 @EnableAutoConfiguration
 class R4AutomatorApplication {
-    private val config: Configuration
 
     lateinit var driver: WebDriver
 
     constructor(config: Configuration, loginConfiguration: LoginConfiguration) {
-        this.config = config
-        setup()
+        setup(config)
 
         doWork(loginConfiguration)
 
@@ -33,13 +31,13 @@ class R4AutomatorApplication {
     }
 
 
-    final fun setup() {
-        System.setProperty(this.config.nameDriver, this.config.pathDriver + this.config.exeDriver)
+    final fun setup(config: Configuration) {
+        System.setProperty(config.nameDriver, config.pathDriver + config.exeDriver)
         driver = ChromeDriver()
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
         driver.manage().window().maximize()
         driver.manage().window().fullscreen()
-        driver.get(URI(this.config.url).toString())
+        driver.get(URI(config.url).toString())
     }
 
     final fun closeDriver() {
