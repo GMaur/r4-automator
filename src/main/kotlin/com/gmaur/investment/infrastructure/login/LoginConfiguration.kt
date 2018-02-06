@@ -12,4 +12,5 @@ class LoginConfiguration {
     var username: String = ""
     var password: String = ""
     var nif: String = ""
+    var url: String = ""
 }

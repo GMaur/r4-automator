@@ -7,7 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.PropertySource
-import java.net.URI
 import java.util.concurrent.TimeUnit
 
 @Configuration
@@ -26,7 +25,6 @@ class WebDriverConfiguration {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
         driver.manage().window().maximize()
         driver.manage().window().fullscreen()
-        driver.get(URI(url).toString())
         return driver
 
     }

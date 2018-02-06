@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
+import java.net.URI
 
 class LoginPage(private val driver: WebDriver) {
 
@@ -21,6 +22,7 @@ class LoginPage(private val driver: WebDriver) {
     }
 
     fun login(config: LoginConfiguration) {
+        driver.get(URI(config.url).toString())
         username(config.username)
         password(config.password)
         nif(config.nif)
