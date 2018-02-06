@@ -2,46 +2,28 @@ package com.gmaur.investment.r4automator
 
 import com.gmaur.investment.infrastructure.login.LoginConfiguration
 import com.gmaur.investment.infrastructure.login.LoginPage
-import com.gmaur.investment.infrastructure.webdriver.Configuration
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.chrome.ChromeDriver
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import java.net.URI
-import java.util.concurrent.TimeUnit
 
 
-@SpringBootApplication()
+@SpringBootApplication(scanBasePackages = arrayOf("com.gmaur.investment.infrastructure"))
 @EnableAutoConfiguration
 class R4AutomatorApplication {
 
-    lateinit var driver: WebDriver
+    var driver: WebDriver
 
-    constructor(config: Configuration, loginConfiguration: LoginConfiguration) {
-        setup(config)
+    constructor(driver: WebDriver, loginConfiguration: LoginConfiguration) {
+        this.driver = driver
 
         doWork(loginConfiguration)
 
-        closeDriver()
+        this.driver.close()
     }
 
     private fun doWork(loginConfiguration: LoginConfiguration) {
         LoginPage(driver).login(loginConfiguration)
-    }
-
-
-    final fun setup(config: Configuration) {
-        System.setProperty(config.nameDriver, config.pathDriver + config.exeDriver)
-        driver = ChromeDriver()
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
-        driver.manage().window().maximize()
-        driver.manage().window().fullscreen()
-        driver.get(URI(config.url).toString())
-    }
-
-    final fun closeDriver() {
-        this.driver.close()
     }
 
 }
