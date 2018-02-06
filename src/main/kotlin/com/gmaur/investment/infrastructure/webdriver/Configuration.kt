@@ -1,4 +1,4 @@
-package com.gmaur.investment.infrastructure.login
+package com.gmaur.investment.infrastructure.webdriver
 
 import com.gmaur.investment.infrastructure.configuration.PropertiesPropertyLoaderFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
@@ -7,9 +7,10 @@ import org.springframework.stereotype.Component
 
 @Component
 @ConfigurationProperties
-@PropertySource("classpath:/private.properties", factory = PropertiesPropertyLoaderFactory::class)
-class LoginConfiguration {
-    var username: String = ""
-    var password: String = ""
-    var nif: String = ""
+@PropertySource("classpath:/application.properties", factory = PropertiesPropertyLoaderFactory::class)
+class Configuration {
+    var pathDriver: String = ""
+    var nameDriver: String = ""
+    var exeDriver: String = ""
+    var url: String = ""
 }
