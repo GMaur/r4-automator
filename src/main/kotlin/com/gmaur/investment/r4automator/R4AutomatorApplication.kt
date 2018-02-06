@@ -1,5 +1,6 @@
 package com.gmaur.investment.r4automator
 
+import com.gmaur.investment.infrastructure.login.LoginConfiguration
 import com.gmaur.investment.infrastructure.login.LoginPage
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
@@ -26,15 +27,6 @@ class Configuration {
     var nameDriver: String = ""
     var exeDriver: String = ""
     var url: String = ""
-}
-
-@Component
-@ConfigurationProperties
-@PropertySource("classpath:/private.properties", factory = PropertiesPropertyLoaderFactory::class)
-class LoginConfiguration {
-    var username: String = ""
-    var password: String = ""
-    var nif: String = ""
 }
 
 open class PropertiesPropertyLoaderFactory : DefaultPropertySourceFactory() {
