@@ -12,8 +12,6 @@ import java.net.URI
 import java.util.concurrent.TimeUnit
 
 
-// Source: https://stackoverflow.com/questions/45880494/configurationproperties-loading-list-from-yml#45882088
-
 @SpringBootApplication()
 @EnableAutoConfiguration
 class R4AutomatorApplication {
