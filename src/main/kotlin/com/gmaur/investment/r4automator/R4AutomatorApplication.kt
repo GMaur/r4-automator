@@ -1,6 +1,6 @@
 package com.gmaur.investment.r4automator
 
-import com.gmaur.investment.infrastructure.LoginPage
+import com.gmaur.investment.infrastructure.login.LoginPage
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
