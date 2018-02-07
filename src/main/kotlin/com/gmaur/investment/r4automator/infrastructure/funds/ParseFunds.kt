@@ -12,6 +12,12 @@ class ParseFunds(val rawHtml: String) {
     fun run(): List<Asset> {
         val assetsTable = obtainAssetTable(rawHtml)
 
+        var elements = parseElements(assetsTable)
+
+        return elements
+    }
+
+    private fun parseElements(assetsTable: Element): List<Asset> {
         var elements = assetsTable.children()
                 .filter { element -> isin(element) != "" }
                 .map { element ->
@@ -21,7 +27,6 @@ class ParseFunds(val rawHtml: String) {
                     val value = valueElement.attr("data-fndval")
                     Asset(isin, BigDecimal(value))
                 }
-
         return elements
     }
 
