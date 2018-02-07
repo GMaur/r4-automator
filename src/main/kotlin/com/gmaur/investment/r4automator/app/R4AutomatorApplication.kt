@@ -59,6 +59,8 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
         // confirm purhcase
         // driver.findElement(By.id("B_ENVIAR_ORD")).click()
 
+        //TODO save page source - to check manually
+
         this.driver.close()
     }
 
