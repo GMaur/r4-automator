@@ -41,16 +41,30 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
     }
 
     private fun parseFunds(fundsConfiguration: FundsConfiguration): String {
-        var funds = FundsPage(this.driver, fundsConfiguration).parse()
-        return funds
+        return retry { FundsPage(this.driver, fundsConfiguration).parse() }!!
     }
 
     private fun enable2FA() {
-        TwoFactorAuthenticationPage(this.driver).enable(`2faProvider`)
+        retry { TwoFactorAuthenticationPage(this.driver).enable(`2faProvider`) }
     }
 
     private fun logIn(loginConfiguration: LoginConfiguration) {
-        LoginPage(this.driver, UserInteraction).login(loginConfiguration)
+        retry { LoginPage(this.driver, UserInteraction).login(loginConfiguration) }
+    }
+
+    private fun <T> retry(f: () -> T): T? {
+        var cont = true
+        var result: T? = null
+        while (cont) {
+            try {
+                if (!cont) break
+                result = f()
+                cont = true
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        return result
     }
 }
 
