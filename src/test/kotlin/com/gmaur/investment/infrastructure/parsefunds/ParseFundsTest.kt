@@ -12,8 +12,7 @@ class ParseFundsTest {
 
     @Test
     fun `parse the funds from the full sample`() {
-        val get = Paths.get("./target/test-classes/funds/samples/funds1.html")
-        val rawHtml = Files.readAllLines(get).joinToString("")
+        val rawHtml = readContents("funds1.html")
         var funds = ParseFunds(rawHtml).run()
 
         assertThat(funds).containsSequence(
@@ -26,8 +25,7 @@ class ParseFundsTest {
 
     @Test
     fun `parse the funds from the reduced sample`() {
-        val get = Paths.get("./target/test-classes/funds/samples/funds2.html")
-        val rawHtml = Files.readAllLines(get).joinToString("")
+        val rawHtml = readContents("funds2.html")
         var funds = ParseFunds(rawHtml).run()
 
         assertThat(funds).containsSequence(
@@ -36,5 +34,12 @@ class ParseFundsTest {
                 ParseFunds.AssetDTO(ParseFunds.ISIN("LU0996177134"), BigDecimal("0.00")),
                 ParseFunds.AssetDTO(ParseFunds.ISIN("LU0996182563"), BigDecimal("1"))
         )
+    }
+
+    private fun readContents(file: String): String {
+        val get = Paths.get("./target/test-classes/funds/samples/" +
+                file)
+        val rawHtml = Files.readAllLines(get).joinToString("")
+        return rawHtml
     }
 }
