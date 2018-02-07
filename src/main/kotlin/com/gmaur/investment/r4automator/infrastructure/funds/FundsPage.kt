@@ -17,7 +17,7 @@ class FundsPage(private val driver: WebDriver, private val config: FundsConfigur
         val pageSource = driver.pageSource
         val path = Paths.get("/tmp/out_" + Math.abs(Random().nextLong()) + ".html")
         Files.write(path, pageSource.toByteArray())
-        println("Wrote temporal page source to" + path)
+        println("Wrote temporal page source to " + path)
         return pageSource
     }
 }
