@@ -6,11 +6,10 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 
-class F {
+class F(val rawHtml: String) {
 
     fun run() {
-        val allLines = Files.readAllLines(Paths.get("/tmp/out613564031102738840.html")).joinToString("")
-        val doc = Jsoup.parse(allLines, "http://r4.com/")
+        val doc = Jsoup.parse(rawHtml, "http://r4.com/")
         val assetsTable = doc.select(".tablemorning.table > tbody")[0]
 
         var elements = assetsTable.children()
@@ -35,6 +34,7 @@ class F {
 }
 
 fun main(args: Array<String>) {
-    F().run()
+    val rawHtml = Files.readAllLines(Paths.get("/tmp/out613564031102738840.html")).joinToString("")
+    F(rawHtml).run()
 }
 
