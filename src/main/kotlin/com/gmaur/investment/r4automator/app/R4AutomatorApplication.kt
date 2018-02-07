@@ -28,16 +28,16 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
         enable2FA()
         parseFunds(fundsConfiguration)
 
-        //seleccionar
+        //select fund
         // driver.findElement(By.cssSelector("tr[data-isin='LU1050469367']")).findElements(By.tagName("a")).last().click()
 
-        //seleccion desde cuenta
+        // purchase from the cash account
         // driver.findElement(By.cssSelector("#fondos-options > td:nth-child(1)")).click()
 
-        // insertar importe
+        // type the amount
         // driver.findElement(By.id("IMPORTE_FONDO_1")).sendKeys("250")
 
-        // confirmar compra
+        // confirm purhcase
         // driver.findElement(By.id("B_ENVIAR_ORD")).click()
 
         this.driver.close()
