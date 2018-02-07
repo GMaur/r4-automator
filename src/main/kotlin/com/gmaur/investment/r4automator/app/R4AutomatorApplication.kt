@@ -37,7 +37,7 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
 
     private fun buyFunds() {
         var purchaseOrder = FundsBuyerPage.PurchaseOrder(ISIN("LU1050469367"), BigDecimal("250"))
-        FundsBuyerPage(driver).buy(purchaseOrder)
+        FundsBuyerPage(driver, UserInteraction).buy(purchaseOrder)
     }
 
     private fun parseFunds(fundsConfiguration: FundsConfiguration): String {
@@ -50,7 +50,7 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
     }
 
     private fun logIn(loginConfiguration: LoginConfiguration) {
-        LoginPage(this.driver).login(loginConfiguration)
+        LoginPage(this.driver, UserInteraction).login(loginConfiguration)
     }
 }
 

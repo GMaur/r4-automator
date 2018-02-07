@@ -1,18 +1,27 @@
 package com.gmaur.investment.r4automator.infrastructure.funds
 
+import com.gmaur.investment.r4automator.app.UserInteraction
 import com.gmaur.investment.r4automator.domain.ISIN
+import com.gmaur.investment.r4automator.infrastructure.files.FileUtils
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import java.math.BigDecimal
 
-class FundsBuyerPage(private val driver: WebDriver) {
+class FundsBuyerPage(private val driver: WebDriver, private val userInteraction: UserInteraction) {
     fun buy(purchaseOrder: PurchaseOrder) {
         selectFund(purchaseOrder.isin)
         selectFromFundsAccount()
         selectAmount(purchaseOrder.amount)
         acceptAllConditions()
-//        confirm()
+        if (userInteraction.`confirm?`("confirm this operation?")) {
+            confirm()
+            savePageSource()
+        }
+    }
+
+    private fun savePageSource() {
+        FileUtils.saveTemporaryFile(driver.pageSource)
     }
 
     data class PurchaseOrder(val isin: ISIN, val amount: BigDecimal)
