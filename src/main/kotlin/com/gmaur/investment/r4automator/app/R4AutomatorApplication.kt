@@ -15,7 +15,8 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 
-@SpringBootApplication(scanBasePackages = arrayOf("com.gmaur.investment.infrastructure"))
+@SpringBootApplication(scanBasePackages = arrayOf("com.gmaur.investment.r4automator"))
+@EnableAutoConfiguration
 class R4AutomatorApplication(private val driver: WebDriver, private val fundsConfiguration: FundsConfiguration, private val loginConfiguration: LoginConfiguration) {
 
     private val `2faProvider` = ConsoleTwoFactorAuthenticationProvider(BufferedReader(InputStreamReader(System.`in`)), System.out)
