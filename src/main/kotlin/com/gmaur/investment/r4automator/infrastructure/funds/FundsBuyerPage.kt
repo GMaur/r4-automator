@@ -12,7 +12,7 @@ class FundsBuyerPage(private val driver: WebDriver) {
         selectFromFundsAccount()
         selectAmount(purchaseOrder.amount)
         acceptAllConditions()
-        confirm()
+//        confirm()
     }
 
     data class PurchaseOrder(val isin: ISIN, val amount: BigDecimal)
