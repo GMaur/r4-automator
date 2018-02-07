@@ -1,5 +1,6 @@
 package com.gmaur.investment.r4automator.app
 
+import com.gmaur.investment.r4automator.infrastructure.funds.FundsBuyerPage
 import com.gmaur.investment.r4automator.infrastructure.funds.FundsConfiguration
 import com.gmaur.investment.r4automator.infrastructure.funds.FundsPage
 import com.gmaur.investment.r4automator.infrastructure.login.LoginConfiguration
@@ -27,41 +28,13 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
         logIn(loginConfiguration)
         enable2FA()
         parseFunds(fundsConfiguration)
-
-        //select fund
-        // driver.findElement(By.cssSelector("tr[data-isin='LU1050469367']")).findElements(By.tagName("a")).last().click()
-
-        // purchase from the cash account
-        // driver.findElement(By.cssSelector("#fondos-options > td:nth-child(1)")).click()
-
-        // type the amount
-        // driver.findElement(By.id("IMPORTE_FONDO_1")).sendKeys("250")
-
-        // confirm purhcase
-        // driver.findElement(By.id("B_ENVIAR_ORD")).click()
-
-        // find the tables to interact to
-        // val tables = driver.findElements(By.cssSelector("form > table"))
-
-        // val documentation = tables.first()
-
-//                val base = driver.windowHandle
-
-        // click on the last element to open the new page - accepts the documentation
-        // driver.findElements(By.cssSelector("form > table")).first().findElements(By.tagName("a")).last().click()
-
-//        driver.switchTo().window(base)
-
-        // val disclaimers = tables.last()
-        //click on all disclaimers
-        //driver.findElements(By.cssSelector("form > table")).last().findElements(By.cssSelector("input[type='checkbox']")).forEach({it.click()})
-
-        // confirm purhcase
-        // driver.findElement(By.id("B_ENVIAR_ORD")).click()
-
-        //TODO save page source - to check manually
+        buyFunds()
 
         this.driver.close()
+    }
+
+    private fun buyFunds() {
+        FundsBuyerPage(driver).buy()
     }
 
     private fun parseFunds(fundsConfiguration: FundsConfiguration): String {
