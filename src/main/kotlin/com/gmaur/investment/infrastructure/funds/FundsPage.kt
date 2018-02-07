@@ -15,7 +15,9 @@ class FundsPage(private val driver: WebDriver, private val config: FundsConfigur
     fun parse(): String {
         driver.get(URI(config.url).toString())
         val pageSource = driver.pageSource
-        Files.write(Paths.get("/tmp/out" + Math.abs(Random().nextLong()) + ".html"), pageSource.toByteArray())
+        val path = Paths.get("/tmp/out_" + Math.abs(Random().nextLong()) + ".html")
+        Files.write(path, pageSource.toByteArray())
+        println("Wrote temporal page source to" + path)
         return pageSource
     }
 }
