@@ -8,6 +8,7 @@ import com.gmaur.investment.r4automator.infrastructure.twofactorauth.ConsoleTwoF
 import com.gmaur.investment.r4automator.infrastructure.twofactorauth.TwoFactorAuthenticationPage
 import org.openqa.selenium.WebDriver
 import org.springframework.boot.CommandLineRunner
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
@@ -26,6 +27,18 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
         logIn(loginConfiguration)
         enable2FA()
         parseFunds(fundsConfiguration)
+
+        //seleccionar
+        // driver.findElement(By.cssSelector("tr[data-isin='LU1050469367']")).findElements(By.tagName("a")).last().click()
+
+        //seleccion desde cuenta
+        // driver.findElement(By.cssSelector("#fondos-options > td:nth-child(1)")).click()
+
+        // insertar importe
+        // driver.findElement(By.id("IMPORTE_FONDO_1")).sendKeys("250")
+
+        // confirmar compra
+        // driver.findElement(By.id("B_ENVIAR_ORD")).click()
 
         this.driver.close()
     }
