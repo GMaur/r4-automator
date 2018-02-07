@@ -1,15 +1,16 @@
 package com.gmaur.investment.infrastructure.funds
 
 import org.jsoup.Jsoup
-import java.io.File
 import java.math.BigDecimal
+import java.nio.file.Files
+import java.nio.file.Paths
 
 
 class F {
 
     fun run() {
-        val input = File("/tmp/out613564031102738840.html")
-        val doc = Jsoup.parse(input, "UTF-8", "http://r4.com/")
+        val allLines = Files.readAllLines(Paths.get("/tmp/out613564031102738840.html")).joinToString("")
+        val doc = Jsoup.parse(allLines, "http://r4.com/")
         val assetsTable = doc.select(".tablemorning.table > tbody")[0]
 
         var elements = assetsTable.children()
