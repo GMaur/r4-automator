@@ -2,13 +2,11 @@ package com.gmaur.investment.infrastructure.funds
 
 import org.jsoup.Jsoup
 import java.math.BigDecimal
-import java.nio.file.Files
-import java.nio.file.Paths
 
 
-class F(val rawHtml: String) {
+class ParseFunds(val rawHtml: String) {
 
-    fun run() {
+    fun run(): List<AssetDTO> {
         val doc = Jsoup.parse(rawHtml, "http://r4.com/")
         val assetsTable = doc.select(".tablemorning.table > tbody")[0]
 
@@ -22,19 +20,12 @@ class F(val rawHtml: String) {
                     AssetDTO(isin, BigDecimal(value))
                 }
 
-        for (element in elements) {
-            println(element)
-        }
+        return elements
     }
 
     data class ISIN(val value: String)
 
 
     data class AssetDTO(val isin: ISIN, val amount: BigDecimal)
-}
-
-fun main(args: Array<String>) {
-    val rawHtml = Files.readAllLines(Paths.get("/tmp/out613564031102738840.html")).joinToString("")
-    F(rawHtml).run()
 }
 
