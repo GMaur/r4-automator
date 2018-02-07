@@ -15,12 +15,7 @@ class ParseFundsTest {
         val rawHtml = readContents("funds1.html")
         var funds = ParseFunds(rawHtml).run()
 
-        assertThat(funds).containsSequence(
-                ParseFunds.AssetDTO(ParseFunds.ISIN("LU1050469367"), BigDecimal("0")),
-                ParseFunds.AssetDTO(ParseFunds.ISIN("LU1050470373"), BigDecimal("99999.99")),
-                ParseFunds.AssetDTO(ParseFunds.ISIN("LU0996177134"), BigDecimal("0.00")),
-                ParseFunds.AssetDTO(ParseFunds.ISIN("LU0996182563"), BigDecimal("1"))
-        )
+        assertThat(funds).containsSequence(funds_sample_1())
     }
 
     @Test
@@ -28,12 +23,14 @@ class ParseFundsTest {
         val rawHtml = readContents("funds2.html")
         var funds = ParseFunds(rawHtml).run()
 
-        assertThat(funds).containsSequence(
-                ParseFunds.AssetDTO(ParseFunds.ISIN("LU1050469367"), BigDecimal("0")),
+        assertThat(funds).containsSequence(funds_sample_1())
+    }
+
+    private fun funds_sample_1(): List<ParseFunds.AssetDTO> {
+        return arrayListOf(ParseFunds.AssetDTO(ParseFunds.ISIN("LU1050469367"), BigDecimal("0")),
                 ParseFunds.AssetDTO(ParseFunds.ISIN("LU1050470373"), BigDecimal("99999.99")),
                 ParseFunds.AssetDTO(ParseFunds.ISIN("LU0996177134"), BigDecimal("0.00")),
-                ParseFunds.AssetDTO(ParseFunds.ISIN("LU0996182563"), BigDecimal("1"))
-        )
+                ParseFunds.AssetDTO(ParseFunds.ISIN("LU0996182563"), BigDecimal("1")))
     }
 
     private fun readContents(file: String): String {
