@@ -8,9 +8,7 @@ import java.math.BigDecimal
 class ParseFunds(val rawHtml: String) {
 
     fun run(): List<AssetDTO> {
-        val doc = Jsoup.parse(rawHtml, "http://r4.com/")
-        val assetsTable = doc.select(".tablemorning.table > tbody")[0]
-        fun isin(element: Element) = element.attr("data-isin")
+        val assetsTable = obtainAssetTable(rawHtml)
 
         var elements = assetsTable.children()
                 .filter { element -> isin(element) != "" }
@@ -30,5 +28,13 @@ class ParseFunds(val rawHtml: String) {
 
 
     data class AssetDTO(val isin: ISIN, val amount: BigDecimal)
+
+    private fun obtainAssetTable(rawHtml: String): Element {
+        val doc = Jsoup.parse(rawHtml, "http://r4.com/")
+        return doc.select(".tablemorning.table > tbody")[0]
+    }
+
+    private fun isin(element: Element) = element.attr("data-isin")
+
 }
 
