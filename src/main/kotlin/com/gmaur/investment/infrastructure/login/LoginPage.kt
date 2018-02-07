@@ -26,7 +26,7 @@ class LoginPage(private val driver: WebDriver) {
         username(config.username)
         password(config.password)
         nif(config.nif)
-        nifBox?.submit()
+        submitForm()
     }
 
     private fun nif(value: String) {
@@ -39,6 +39,10 @@ class LoginPage(private val driver: WebDriver) {
 
     private fun username(value: String) {
         usernameBox?.sendKeys(value)
+    }
+
+    private fun submitForm() {
+        nifBox?.submit()
     }
 }
 
