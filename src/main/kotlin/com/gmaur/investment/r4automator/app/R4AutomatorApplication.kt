@@ -1,5 +1,6 @@
 package com.gmaur.investment.r4automator.app
 
+import com.gmaur.investment.r4automator.domain.ISIN
 import com.gmaur.investment.r4automator.infrastructure.funds.FundsBuyerPage
 import com.gmaur.investment.r4automator.infrastructure.funds.FundsConfiguration
 import com.gmaur.investment.r4automator.infrastructure.funds.FundsPage
@@ -15,6 +16,7 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.math.BigDecimal
 
 
 @SpringBootApplication(scanBasePackages = arrayOf("com.gmaur.investment.r4automator"))
@@ -34,7 +36,10 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
     }
 
     private fun buyFunds() {
-        FundsBuyerPage(driver).buy()
+        val isin = ISIN("LU1050469367")
+        val amount = BigDecimal("250")
+        var purchaseOrder = FundsBuyerPage.PurchaseOrder(isin, amount)
+        FundsBuyerPage(driver).buy(purchaseOrder)
     }
 
     private fun parseFunds(fundsConfiguration: FundsConfiguration): String {

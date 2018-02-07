@@ -7,17 +7,15 @@ import org.openqa.selenium.WebElement
 import java.math.BigDecimal
 
 class FundsBuyerPage(private val driver: WebDriver) {
-    fun buy() {
-        //configuration
-        val isin = ISIN("LU1050469367")
-        val amount = BigDecimal("250")
-
-        selectFund(isin)
+    fun buy(purchaseOrder: PurchaseOrder) {
+        selectFund(purchaseOrder.isin)
         selectFromFundsAccount()
-        selectAmount(amount)
+        selectAmount(purchaseOrder.amount)
         acceptAllConditions()
         confirm()
     }
+
+    data class PurchaseOrder(val isin: ISIN, val amount: BigDecimal)
 
     private fun acceptAllConditions() {
         val tables = driver.findElements(By.cssSelector("form > table"))
