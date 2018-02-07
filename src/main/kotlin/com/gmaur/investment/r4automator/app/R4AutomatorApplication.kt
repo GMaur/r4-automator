@@ -40,6 +40,25 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
         // confirm purhcase
         // driver.findElement(By.id("B_ENVIAR_ORD")).click()
 
+        // find the tables to interact to
+        // val tables = driver.findElements(By.cssSelector("form > table"))
+
+        // val documentation = tables.first()
+
+//                val base = driver.windowHandle
+
+        // click on the last element to open the new page - accepts the documentation
+        // driver.findElements(By.cssSelector("form > table")).first().findElements(By.tagName("a")).last().click()
+
+//        driver.switchTo().window(base)
+
+        // val disclaimers = tables.last()
+        //click on all disclaimers
+        //driver.findElements(By.cssSelector("form > table")).last().findElements(By.cssSelector("input[type='checkbox']")).forEach({it.click()})
+
+        // confirm purhcase
+        // driver.findElement(By.id("B_ENVIAR_ORD")).click()
+
         this.driver.close()
     }
 
