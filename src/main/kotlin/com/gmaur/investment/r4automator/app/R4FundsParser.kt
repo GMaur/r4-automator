@@ -9,11 +9,7 @@ import java.nio.file.Paths
 
 class R4FundsParser {
 
-    private val filePickerProvider: FilePickerProvider
-
-    constructor() {
-        this.filePickerProvider = FilePickerProvider.aNew()
-    }
+    private val filePickerProvider: FilePickerProvider = FilePickerProvider.aNew()
 
     fun run(args: Array<String>) {
 
