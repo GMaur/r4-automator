@@ -36,9 +36,7 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
     }
 
     private fun buyFunds() {
-        val isin = ISIN("LU1050469367")
-        val amount = BigDecimal("250")
-        var purchaseOrder = FundsBuyerPage.PurchaseOrder(isin, amount)
+        var purchaseOrder = FundsBuyerPage.PurchaseOrder(ISIN("LU1050469367"), BigDecimal("250"))
         FundsBuyerPage(driver).buy(purchaseOrder)
     }
 
