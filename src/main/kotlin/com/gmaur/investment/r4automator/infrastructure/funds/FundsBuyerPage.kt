@@ -1,38 +1,67 @@
 package com.gmaur.investment.r4automator.infrastructure.funds
 
+import com.gmaur.investment.r4automator.domain.ISIN
+import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebElement
+import java.math.BigDecimal
 
 class FundsBuyerPage(private val driver: WebDriver) {
     fun buy() {
-        //select fund
-        // driver.findElement(By.cssSelector("tr[data-isin='LU1050469367']")).findElements(By.tagName("a")).last().click()
+        //configuration
+        val isin = ISIN("LU1050469367")
+        val amount = BigDecimal("250")
 
-        // purchase from the cash account
-        // driver.findElement(By.cssSelector("#fondos-options > td:nth-child(1)")).click()
-
-        // type the amount
-        // driver.findElement(By.id("IMPORTE_FONDO_1")).sendKeys("250")
-
-        // confirm purhcase
-        // driver.findElement(By.id("B_ENVIAR_ORD")).click()
-
-        // find the tables to interact to
-        // val tables = driver.findElements(By.cssSelector("form > table"))
-
-        // val documentation = tables.first()
-
-//                val base = driver.windowHandle
-
-        // click on the last element to open the new page - accepts the documentation
-        // driver.findElements(By.cssSelector("form > table")).first().findElements(By.tagName("a")).last().click()
-
-//        driver.switchTo().window(base)
-
-        // val disclaimers = tables.last()
-        //click on all disclaimers
-        //driver.findElements(By.cssSelector("form > table")).last().findElements(By.cssSelector("input[type='checkbox']")).forEach({it.click()})
-
-        // confirm purhcase
-        // driver.findElement(By.id("B_ENVIAR_ORD")).click()
+        selectFund(isin)
+        selectFromFundsAccount()
+        selectAmount(amount)
+        acceptAllConditions()
+        confirm()
     }
+
+    private fun acceptAllConditions() {
+        val tables = driver.findElements(By.cssSelector("form > table"))
+
+        val documentation = tables.first()
+
+        val previousPage = driver.windowHandle
+
+        acceptDocumentation(documentation).click()
+
+        goBackTo(previousPage)
+
+        acceptDisclaimers(tables)
+    }
+
+    private fun acceptDisclaimers(tables: MutableList<WebElement>) {
+        val disclaimers = tables.last()
+
+        //click on all disclaimers
+        disclaimers.findElements(By.cssSelector("input[type='checkbox']")).forEach({ it.click() })
+    }
+
+    private fun goBackTo(previousPage: String?) {
+        driver.switchTo().window(previousPage)
+    }
+
+    private fun selectAmount(amount: BigDecimal) {
+        typeAmount(amount)
+        confirm()
+    }
+
+    private fun typeAmount(amount: BigDecimal) {
+        driver.findElement(By.id("IMPORTE_FONDO_1")).sendKeys(amount.toString())
+    }
+
+    private fun confirm() = driver.findElement(By.id("B_ENVIAR_ORD"))
+
+    private fun selectFromFundsAccount() {
+        driver.findElement(By.cssSelector("#fondos-options > td:nth-child(1)")).click()
+    }
+
+    private fun selectFund(isin: ISIN) {
+        driver.findElement(By.cssSelector("tr[data-isin='" + isin + "']")).findElements(By.tagName("a")).last().click()
+    }
+
+    private fun acceptDocumentation(table: WebElement) = table.findElements(By.tagName("a")).last()
 }
