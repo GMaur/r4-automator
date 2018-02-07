@@ -18,15 +18,19 @@ class ParseFunds(val rawHtml: String) {
     }
 
     private fun parseElements(assetsTable: Element): List<Asset> {
+        fun parseElement(): (Element) -> Asset {
+            return { element ->
+                val isin = ISIN(isin(element))
+                var valueElement = element.getElementsByTag("td").flatMap { it -> it.getElementsByClass("fndVal_CNT_PATRIMONIO") }.first()
+
+                val value = valueElement.attr("data-fndval")
+                Asset(isin, BigDecimal(value))
+            }
+        }
+
         var elements = assetsTable.children()
                 .filter { element -> isin(element) != "" }
-                .map { element ->
-                    val isin = ISIN(isin(element))
-                    var valueElement = element.getElementsByTag("td").flatMap { it -> it.getElementsByClass("fndVal_CNT_PATRIMONIO") }.first()
-
-                    val value = valueElement.attr("data-fndval")
-                    Asset(isin, BigDecimal(value))
-                }
+                .map(parseElement())
         return elements
     }
 
