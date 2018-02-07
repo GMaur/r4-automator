@@ -24,6 +24,7 @@ class FundsBuyerPage(private val driver: WebDriver) {
 
         val previousPage = driver.windowHandle
 
+        // opens in a new page
         acceptDocumentation(documentation).click()
 
         goBackTo(previousPage)
