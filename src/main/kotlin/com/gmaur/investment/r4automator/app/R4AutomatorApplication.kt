@@ -1,11 +1,11 @@
-package com.gmaur.investment.r4automator
+package com.gmaur.investment.r4automator.app
 
-import com.gmaur.investment.infrastructure.funds.FundsConfiguration
-import com.gmaur.investment.infrastructure.funds.FundsPage
-import com.gmaur.investment.infrastructure.login.LoginConfiguration
-import com.gmaur.investment.infrastructure.login.LoginPage
-import com.gmaur.investment.infrastructure.twofactorauth.ConsoleTwoFactorAuthenticationProvider
-import com.gmaur.investment.infrastructure.twofactorauth.TwoFactorAuthenticationPage
+import com.gmaur.investment.r4automator.infrastructure.funds.FundsConfiguration
+import com.gmaur.investment.r4automator.infrastructure.funds.FundsPage
+import com.gmaur.investment.r4automator.infrastructure.login.LoginConfiguration
+import com.gmaur.investment.r4automator.infrastructure.login.LoginPage
+import com.gmaur.investment.r4automator.infrastructure.twofactorauth.ConsoleTwoFactorAuthenticationProvider
+import com.gmaur.investment.r4automator.infrastructure.twofactorauth.TwoFactorAuthenticationPage
 import org.openqa.selenium.WebDriver
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication

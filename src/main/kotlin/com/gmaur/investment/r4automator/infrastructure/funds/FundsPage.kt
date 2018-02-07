@@ -1,4 +1,4 @@
-package com.gmaur.investment.infrastructure.funds
+package com.gmaur.investment.r4automator.infrastructure.funds
 
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.PageFactory

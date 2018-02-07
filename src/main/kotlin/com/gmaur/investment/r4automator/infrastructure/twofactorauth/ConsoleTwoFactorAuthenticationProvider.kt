@@ -1,4 +1,4 @@
-package com.gmaur.investment.infrastructure.twofactorauth
+package com.gmaur.investment.r4automator.infrastructure.twofactorauth
 
 import java.io.BufferedReader
 import java.io.PrintStream

@@ -1,4 +1,4 @@
-package com.gmaur.investment.infrastructure.configuration
+package com.gmaur.investment.r4automator.infrastructure.configuration
 
 import org.springframework.boot.env.PropertiesPropertySourceLoader
 import org.springframework.core.io.support.DefaultPropertySourceFactory

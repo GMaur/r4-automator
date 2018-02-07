@@ -1,5 +1,7 @@
-package com.gmaur.investment.infrastructure.funds
+package com.gmaur.investment.r4automator.infrastructure.funds
 
+import com.gmaur.investment.r4automator.domain.Asset
+import com.gmaur.investment.r4automator.domain.ISIN
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.math.BigDecimal
@@ -7,7 +9,7 @@ import java.math.BigDecimal
 
 class ParseFunds(val rawHtml: String) {
 
-    fun run(): List<AssetDTO> {
+    fun run(): List<Asset> {
         val assetsTable = obtainAssetTable(rawHtml)
 
         var elements = assetsTable.children()
@@ -17,17 +19,12 @@ class ParseFunds(val rawHtml: String) {
                     var valueElement = element.getElementsByTag("td").flatMap { it -> it.getElementsByClass("fndVal_CNT_PATRIMONIO") }.first()
 
                     val value = valueElement.attr("data-fndval")
-                    AssetDTO(isin, BigDecimal(value))
+                    Asset(isin, BigDecimal(value))
                 }
 
         return elements
     }
 
-
-    data class ISIN(val value: String)
-
-
-    data class AssetDTO(val isin: ISIN, val amount: BigDecimal)
 
     private fun obtainAssetTable(rawHtml: String): Element {
         val doc = Jsoup.parse(rawHtml, "http://r4.com/")

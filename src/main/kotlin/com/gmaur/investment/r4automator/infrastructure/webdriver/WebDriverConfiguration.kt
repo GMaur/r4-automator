@@ -1,6 +1,6 @@
-package com.gmaur.investment.infrastructure.webdriver
+package com.gmaur.investment.r4automator.infrastructure.webdriver
 
-import com.gmaur.investment.infrastructure.configuration.PropertiesPropertyLoaderFactory
+import com.gmaur.investment.r4automator.infrastructure.configuration.PropertiesPropertyLoaderFactory
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.springframework.boot.context.properties.ConfigurationProperties

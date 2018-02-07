@@ -1,4 +1,4 @@
-package com.gmaur.investment.infrastructure.twofactorauth
+package com.gmaur.investment.r4automator.infrastructure.twofactorauth
 
 import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat

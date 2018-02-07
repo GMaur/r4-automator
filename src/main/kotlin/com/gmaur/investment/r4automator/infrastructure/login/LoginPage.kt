@@ -1,4 +1,4 @@
-package com.gmaur.investment.infrastructure.login
+package com.gmaur.investment.r4automator.infrastructure.login
 
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
