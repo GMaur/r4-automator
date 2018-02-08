@@ -11,7 +11,7 @@ class FundsPage(private val driver: WebDriver, private val config: FundsConfigur
     }
 
     fun parse(): String {
-        driver.get(URI(config.url).toString())
+        driver.get(URI(config.fundsurl).toString())
         FileUtils.saveTemporaryFile(driver.pageSource)
         return driver.pageSource
     }
