@@ -10,23 +10,17 @@ import com.gmaur.investment.r4automator.infrastructure.twofactorauth.ConsoleTwoF
 import com.gmaur.investment.r4automator.infrastructure.twofactorauth.TwoFactorAuthenticationPage
 import org.openqa.selenium.WebDriver
 import org.springframework.boot.CommandLineRunner
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
-import org.springframework.context.annotation.Bean
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.math.BigDecimal
 
-
 @SpringBootApplication(scanBasePackages = arrayOf("com.gmaur.investment.r4automator"))
-@EnableAutoConfiguration
-class R4AutomatorApplication(private val driver: WebDriver, private val fundsConfiguration: FundsConfiguration, private val loginConfiguration: LoginConfiguration) {
+class R4AutomatorApplication(private val driver: WebDriver, private val fundsConfiguration: FundsConfiguration, private val loginConfiguration: LoginConfiguration) : CommandLineRunner {
 
-    private val `2faProvider` = ConsoleTwoFactorAuthenticationProvider(BufferedReader(InputStreamReader(System.`in`)), System.out)
-
-    @Bean
-    fun init() = CommandLineRunner {
+    @Throws(Exception::class)
+    override fun run(vararg strings: String) {
         logIn(loginConfiguration)
         enable2FA()
         parseFunds(fundsConfiguration)
@@ -35,39 +29,35 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
         this.driver.close()
     }
 
+    private val `2faProvider` = ConsoleTwoFactorAuthenticationProvider(BufferedReader(InputStreamReader(System.`in`)), System.out)
+
     private fun buyFunds() {
         var purchaseOrder = FundsBuyerPage.PurchaseOrder(ISIN("LU1050469367"), BigDecimal("250"))
         FundsBuyerPage(driver, UserInteraction).buy(purchaseOrder)
     }
 
     private fun parseFunds(fundsConfiguration: FundsConfiguration): String {
-        return retry { FundsPage(this.driver, fundsConfiguration).parse() }!!
+        return protect { FundsPage(this.driver, fundsConfiguration).parse() }!!
     }
 
     private fun enable2FA() {
-        retry { TwoFactorAuthenticationPage(this.driver).enable(`2faProvider`) }
+        protect { TwoFactorAuthenticationPage(this.driver).enable(`2faProvider`) }
     }
 
     private fun logIn(loginConfiguration: LoginConfiguration) {
-        retry { LoginPage(this.driver, UserInteraction).login(loginConfiguration) }
+        protect { LoginPage(this.driver, UserInteraction).login(loginConfiguration) }
     }
 
-    private fun <T> retry(f: () -> T): T? {
-        var cont = true
-        var result: T? = null
-        while (cont) {
-            try {
-                if (!cont) break
-                result = f()
-                cont = true
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+    private fun <T> protect(f: () -> T): T? {
+        try {
+            return f()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
         }
-        return result
     }
 }
 
 fun main(args: Array<String>) {
-    runApplication<R4AutomatorApplication>(*args)
+    SpringApplication.run(R4AutomatorApplication::class.java, *args)
 }
