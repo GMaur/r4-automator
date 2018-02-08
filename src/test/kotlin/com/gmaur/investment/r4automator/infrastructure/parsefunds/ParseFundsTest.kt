@@ -2,11 +2,11 @@ package com.gmaur.investment.r4automator.infrastructure.parsefunds
 
 import com.gmaur.investment.r4automator.domain.Asset
 import com.gmaur.investment.r4automator.domain.ISIN
+import com.gmaur.investment.r4automator.infrastructure.files.FileUtils
 import com.gmaur.investment.r4automator.infrastructure.funds.ParseFunds
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import java.math.BigDecimal
-import java.nio.file.Files
 import java.nio.file.Paths
 
 class ParseFundsTest {
@@ -36,9 +36,11 @@ class ParseFundsTest {
     }
 
     private fun readContents(file: String): String {
-        val get = Paths.get("./target/test-classes/funds/samples/" +
-                file)
-        val rawHtml = Files.readAllLines(get).joinToString("")
+        val get = inTestClasses(file)
+        val rawHtml = FileUtils.readAllLinesAsString(get)
         return rawHtml
     }
+
+    private fun inTestClasses(file: String) = Paths.get("./target/test-classes/funds/samples/" +
+            file)
 }
