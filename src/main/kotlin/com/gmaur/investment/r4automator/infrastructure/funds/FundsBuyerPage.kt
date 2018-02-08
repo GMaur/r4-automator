@@ -68,7 +68,7 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
     }
 
     private fun selectFund(isin: ISIN) {
-        driver.findElement(By.cssSelector("tr[data-isin='" + isin + "']")).findElements(By.tagName("a")).last().click()
+        driver.findElement(By.cssSelector("tr[data-isin='" + isin.value + "']")).findElements(By.tagName("a")).last().click()
     }
 
     private fun acceptDocumentation(table: WebElement) = table.findElements(By.tagName("a")).last()
