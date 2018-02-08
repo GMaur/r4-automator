@@ -8,16 +8,32 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import java.math.BigDecimal
 
-class FundsBuyerPage(private val driver: WebDriver, private val userInteraction: UserInteraction) {
+class FundsBuyerPage(private val driver: WebDriver, private val userInteraction: UserInteraction, private val fundsConfiguration: FundsConfiguration) {
+    private val fromFundsAccount = By.cssSelector("#fondos-options > td:nth-child(1)")
+
     fun buy(purchaseOrder: PurchaseOrder) {
+        navigateToTheFundsPage()
         selectFund(purchaseOrder.isin)
+        if (impossibleToSelectFromFunds()) {
+            println("Impossible to fulfill this purchase order" + purchaseOrder)
+            return
+        }
         selectFromFundsAccount()
         selectAmount(purchaseOrder.amount)
         acceptAllConditions()
         if (userInteraction.`confirm?`("confirm this operation?")) {
-            confirm()
+            confirmButton().click()
             savePageSource()
         }
+    }
+
+    private fun navigateToTheFundsPage() {
+        driver.get(fundsConfiguration.fundsurl)
+    }
+
+    private fun impossibleToSelectFromFunds(): Boolean {
+        val fromFundsAccount = driver.findElement(fromFundsAccount)
+        return fromFundsAccount.getAttribute("class").contains("no-operativa")
     }
 
     private fun savePageSource() {
@@ -54,17 +70,20 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
 
     private fun selectAmount(amount: BigDecimal) {
         typeAmount(amount)
-        confirm()
+        confirmButton().click()
     }
 
     private fun typeAmount(amount: BigDecimal) {
         driver.findElement(By.id("IMPORTE_FONDO_1")).sendKeys(amount.toString())
     }
 
-    private fun confirm() = driver.findElement(By.id("B_ENVIAR_ORD"))
+    private fun confirmButton() = driver.findElement(By.id("B_ENVIAR_ORD"))
 
     private fun selectFromFundsAccount() {
-        driver.findElement(By.cssSelector("#fondos-options > td:nth-child(1)")).click()
+        val fromFundsAccount = driver.findElement(fromFundsAccount)
+        if (fromFundsAccount.findElement(By.tagName("a")).isEnabled) {
+            fromFundsAccount.click()
+        }
     }
 
     private fun selectFund(isin: ISIN) {
