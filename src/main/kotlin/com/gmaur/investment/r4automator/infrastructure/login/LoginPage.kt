@@ -27,7 +27,8 @@ class LoginPage(private val driver: WebDriver, private val userInteraction: User
         username(config.username)
         password(config.password)
         nif(config.nif)
-        if (userInteraction.`confirm?`("login?")) {
+        val shouldLogin = userInteraction.`confirm?`("login?")
+        if (shouldLogin) {
             submitForm()
         }
     }
