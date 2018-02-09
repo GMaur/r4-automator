@@ -8,19 +8,14 @@ import com.gmaur.investment.r4automator.infrastructure.login.LoginConfiguration
 import com.gmaur.investment.r4automator.infrastructure.login.LoginPage
 import com.gmaur.investment.r4automator.infrastructure.twofactorauth.ConsoleTwoFactorAuthenticationProvider
 import com.gmaur.investment.r4automator.infrastructure.twofactorauth.TwoFactorAuthenticationPage
-import com.google.common.io.Files
-import org.openqa.selenium.OutputType
-import org.openqa.selenium.TakesScreenshot
+import com.gmaur.investment.r4automator.infrastructure.webdriver.WebDriverUtils
 import org.openqa.selenium.WebDriver
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import java.io.BufferedReader
-import java.io.File
 import java.io.InputStreamReader
 import java.math.BigDecimal
-import java.nio.file.Paths
-import java.util.*
 
 
 @SpringBootApplication(scanBasePackages = arrayOf("com.gmaur.investment.r4automator"))
@@ -58,16 +53,9 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
     }
 
     private fun <T> protect(f: () -> T): T? {
-        try {
-            return f()
-        } catch (e: Exception) {
-            val scrFile = (driver as TakesScreenshot).getScreenshotAs<File>(OutputType.FILE)
-            val currentFailure = Math.abs(Random().nextLong())
-            Files.copy(scrFile, File(Paths.get("/tmp/failure_" + currentFailure + "_screenshot.png").toUri()))
-            e.printStackTrace()
-            return null
-        }
+        return WebDriverUtils.protect(driver, f)
     }
+
 }
 
 fun main(args: Array<String>) {
