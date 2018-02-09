@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component
 @ConfigurationProperties
 @PropertySource("classpath:/funds.properties", factory = PropertiesPropertyLoaderFactory::class)
 class FundsConfiguration {
-    var url: String = ""
+    var fundsurl: String = ""
 }
