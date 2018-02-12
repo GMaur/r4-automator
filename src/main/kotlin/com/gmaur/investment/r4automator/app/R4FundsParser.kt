@@ -12,10 +12,8 @@ class R4FundsParser {
     fun run(args: Array<String>) {
 
         val file = filePickerProvider.request()
-        val funds = ParseFunds(FileUtils.readAllLinesAsString(Paths.get(file))).run()
-        for (fund in funds) {
-            println(fund)
-        }
+        val portfolio = ParseFunds(FileUtils.readAllLinesAsString(Paths.get(file))).run()
+        println(portfolio)
     }
 }
 

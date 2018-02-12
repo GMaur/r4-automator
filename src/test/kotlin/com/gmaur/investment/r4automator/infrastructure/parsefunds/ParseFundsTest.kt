@@ -3,6 +3,7 @@ package com.gmaur.investment.r4automator.infrastructure.parsefunds
 import com.gmaur.investment.r4automator.infrastructure.files.FileUtils
 import com.gmaur.investment.r4automator.infrastructure.funds.ParseFunds
 import com.gmaur.investment.r4automator.infrastructure.parsefunds.FundsObjectMother.funds_sample_1
+import com.gmaur.investment.r4automator.infrastructure.portfolio.Portfolio
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import java.nio.file.Paths
@@ -14,7 +15,7 @@ class ParseFundsTest {
         val rawHtml = readContents("funds1.html")
         var funds = ParseFunds(rawHtml).run()
 
-        assertThat(funds).containsSequence(funds_sample_1())
+        assertThat(funds).isEqualTo(Portfolio(funds_sample_1()))
     }
 
     @Test
@@ -22,7 +23,7 @@ class ParseFundsTest {
         val rawHtml = readContents("funds2.html")
         var funds = ParseFunds(rawHtml).run()
 
-        assertThat(funds).containsSequence(funds_sample_1())
+        assertThat(funds).isEqualTo(Portfolio(funds_sample_1()))
     }
 
 

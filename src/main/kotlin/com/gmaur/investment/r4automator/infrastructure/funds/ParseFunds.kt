@@ -2,6 +2,7 @@ package com.gmaur.investment.r4automator.infrastructure.funds
 
 import com.gmaur.investment.r4automator.domain.Asset
 import com.gmaur.investment.r4automator.domain.ISIN
+import com.gmaur.investment.r4automator.infrastructure.portfolio.Portfolio
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.math.BigDecimal
@@ -9,12 +10,12 @@ import java.math.BigDecimal
 
 class ParseFunds(val rawHtml: String) {
 
-    fun run(): List<Asset> {
+    fun run(): Portfolio {
         val assetsTable = obtainAssetTable(rawHtml)
 
         var elements = parseElements(assetsTable)
 
-        return elements
+        return Portfolio(elements)
     }
 
     private fun parseElements(assetsTable: Element): List<Asset> {
