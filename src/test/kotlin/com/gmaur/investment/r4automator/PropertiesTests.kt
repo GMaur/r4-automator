@@ -27,6 +27,8 @@ class PropertiesTests {
     fun `the login and the funds have different configuration`() {
         val url = loginConfiguration.url
         val fundsurl = fundsConfiguration.fundsurl
+        assertThat(url).isNotNull()
+        assertThat(fundsurl).isNotNull()
         assertThat(url).isNotEqualToIgnoringCase(fundsurl)
     }
 
