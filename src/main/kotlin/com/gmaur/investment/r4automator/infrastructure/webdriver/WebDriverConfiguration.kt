@@ -19,7 +19,7 @@ class WebDriverConfiguration {
     var url: String = ""
 
     @Bean
-    fun driverBean(): WebDriver {
+    fun driver(): WebDriver {
         System.setProperty(nameDriver, pathDriver + exeDriver)
         var driver = ChromeDriver()
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
