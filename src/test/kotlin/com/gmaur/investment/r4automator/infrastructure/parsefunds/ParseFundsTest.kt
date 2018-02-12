@@ -1,12 +1,10 @@
 package com.gmaur.investment.r4automator.infrastructure.parsefunds
 
-import com.gmaur.investment.r4automator.domain.Asset
-import com.gmaur.investment.r4automator.domain.ISIN
 import com.gmaur.investment.r4automator.infrastructure.files.FileUtils
 import com.gmaur.investment.r4automator.infrastructure.funds.ParseFunds
+import com.gmaur.investment.r4automator.infrastructure.parsefunds.FundsObjectMother.funds_sample_1
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import java.math.BigDecimal
 import java.nio.file.Paths
 
 class ParseFundsTest {
@@ -26,13 +24,6 @@ class ParseFundsTest {
         var funds = ParseFunds(rawHtml).run()
 
         assertThat(funds).containsSequence(funds_sample_1())
-    }
-
-    private fun funds_sample_1(): List<Asset> {
-        return arrayListOf(Asset(ISIN("LU1050469367"), BigDecimal("0")),
-                Asset(ISIN("LU1050470373"), BigDecimal("99999.99")),
-                Asset(ISIN("LU0996177134"), BigDecimal("0.00")),
-                Asset(ISIN("LU0996182563"), BigDecimal("1")))
     }
 
     private fun readContents(file: String): String {
