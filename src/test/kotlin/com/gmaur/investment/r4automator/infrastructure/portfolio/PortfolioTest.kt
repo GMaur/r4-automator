@@ -7,6 +7,7 @@ import com.gmaur.investment.r4automator.domain.Asset
 import com.gmaur.investment.r4automator.infrastructure.parsefunds.FundsObjectMother
 import org.assertj.core.api.Assertions
 import org.junit.Test
+import java.io.File
 
 class PortfolioTest {
     val mapper = ObjectMapper().registerKotlinModule()
@@ -24,6 +25,13 @@ class PortfolioTest {
         val serialized = mapper.writeValueAsString(Portfolio(FundsObjectMother.funds_sample_1()))
         val objects = mapper.readValue<Portfolio>(serialized)
         Assertions.assertThat(objects).isEqualTo(Portfolio(FundsObjectMother.funds_sample_1()))
+    }
+
+    @Test
+    fun `serialize to file`() {
+        val tempFile = File.createTempFile("tempfile", ".tmp")
+        println(tempFile.path)
+        mapper.writeValue(tempFile, Portfolio(FundsObjectMother.funds_sample_1()))
     }
 
 }
