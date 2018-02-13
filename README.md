@@ -8,7 +8,9 @@ As far as I know, there is no public API. (If you know about one, please send me
 
 ### In scope
 
+  * Login (including two-factor authentication)
   * The Funds (fondos) page.
+  * Generating a portfolio in a common format (e.g., for further processing)
 
 ### Out of scope 
 
