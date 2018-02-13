@@ -12,7 +12,8 @@ The Funds (fondos) page.
 
 ### Out of scope 
 
-Note: This project is open to contributions. If you want to contribute with ideas or pull, feel free
+Note: This project is open to contributions. If you want to contribute with ideas or pull requests (PRs),
+feel free to go ahead.
 
 It is currently out of scope:
 
