@@ -2,7 +2,7 @@
 
 Automates the interaction with the [Renta4 broker](https://r4.com).
 
-
+As far as I know, there is no public API. (If you know about one, please send me a message / issue)
 
 ## Scope of the project
 
