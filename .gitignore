@@ -25,4 +25,5 @@ nbdist/
 
 ## Custom ignores
 private.properties
+tmp/
 
