@@ -18,6 +18,7 @@ class FilePortfolioRepositoryTest {
         val repo = FilePortfolioRepository()
 
         repo.save(Portfolio(funds_sample_1()), tempFile)
+        println("saved portfolio to " + tempFile.toPath().toAbsolutePath())
 
         val softly = SoftAssertions()
         val contentOf = Assertions.contentOf(tempFile)
