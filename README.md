@@ -19,3 +19,15 @@ It is currently out of scope:
   * Other types of assets 
   * Configuration (e.g., user, account, information)
   * Fiscal information (e.g., at the end of the fiscal year)
+
+## Contributing
+
+This project is open to contributions.
+
+We're mainly interested in solving our own problems, not adding features for the sake of completion.
+On the other hand, if you need to solve a problem of yours that is not currently solved by this
+project, please contact us (message / issue).
+
+### Reaching us
+
+Please send a message (e.g., [twitter](https://twitter.com/alvarobiz)) or an [issue](/issues/)
