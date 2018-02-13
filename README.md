@@ -34,4 +34,4 @@ project, please contact us (message / issue).
 
 ### Reaching us
 
-Please send a message (e.g., [twitter](https://twitter.com/alvarobiz)) or an [issue](/issues/)
+Please send a message (e.g., [twitter](https://twitter.com/alvarobiz)) or an [issue](https://github.com/alvarogarcia7/r4-automator/issues)
