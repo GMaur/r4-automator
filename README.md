@@ -8,7 +8,7 @@ As far as I know, there is no public API. (If you know about one, please send me
 
 ### In scope
 
-The Funds (fondos) page.
+  * The Funds (fondos) page.
 
 ### Out of scope 
 
