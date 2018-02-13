@@ -30,6 +30,7 @@ class FilePortfolioRepositoryTest {
         softly.assertAll()
     }
 
+    // https://stackoverflow.com/questions/51438/getting-a-files-mime-type-in-java
     private fun detectFileType(tempFile: File?): String {
         val fileType = FileInputStream(tempFile).use {
             BufferedInputStream(it).use { bis ->
