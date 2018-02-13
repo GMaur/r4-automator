@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.gmaur.investment.r4automator.domain.Asset
+import com.gmaur.investment.r4automator.infrastructure.funds.FilePortfolioRepository
 import com.gmaur.investment.r4automator.infrastructure.parsefunds.FundsObjectMother
+import com.gmaur.investment.r4automator.infrastructure.parsefunds.FundsObjectMother.funds_sample_1
 import org.apache.tika.metadata.Metadata
 import org.apache.tika.parser.AutoDetectParser
 import org.assertj.core.api.Assertions
@@ -37,8 +39,9 @@ class PortfolioTest {
     @Test
     fun `serialize to file`() {
         val tempFile = File.createTempFile("tempfile", ".tmp")
+        val repo = FilePortfolioRepository()
 
-        mapper.writeValue(tempFile, Portfolio(FundsObjectMother.funds_sample_1()))
+        repo.save(Portfolio(funds_sample_1()), tempFile)
 
         val softly = SoftAssertions()
         val contentOf = contentOf(tempFile)
