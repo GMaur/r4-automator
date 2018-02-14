@@ -26,7 +26,7 @@ object FileUtils {
 
 class FilePickerProvider(private val input: BufferedReader, private val out: PrintStream) {
     fun request(): String {
-        out.print("Input the absolute path to the file:")
+        out.print("Input the absolute path to the file: ")
         return input.readLine()
     }
 
