@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 
 @Component
 @ConfigurationProperties
-@PropertySource("classpath:/private.properties", factory = PropertiesPropertyLoaderFactory::class)
+@PropertySource(value = ["classpath:/private.properties"], factory = PropertiesPropertyLoaderFactory::class)
 class LoginConfiguration {
     var username: String = ""
     var password: String = ""
