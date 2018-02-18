@@ -10,12 +10,12 @@ class FilePortfolioRepository {
 
     private val mapper: ObjectMapper
 
-    constructor() {
-        mapper = ObjectMapper().registerKotlinModule()
-        mapper.enable(SerializationFeature.INDENT_OUTPUT)
-    }
-
     fun save(portfolio: Portfolio, file: File) {
         mapper.writeValue(file, portfolio)
+    }
+
+    init {
+        mapper = ObjectMapper().registerKotlinModule()
+        mapper.enable(SerializationFeature.INDENT_OUTPUT)
     }
 }
