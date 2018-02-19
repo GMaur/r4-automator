@@ -1,5 +1,6 @@
 package com.gmaur.investment.r4automator.app
 
+import com.gmaur.investment.r4automator.infrastructure.cash.parse.ParseCash
 import com.gmaur.investment.r4automator.infrastructure.files.FilePickerProvider
 import com.gmaur.investment.r4automator.infrastructure.files.FileUtils
 import com.gmaur.investment.r4automator.infrastructure.funds.FilePortfolioRepository
@@ -13,8 +14,9 @@ class R4FundsParser(private val portfolioRepo: FilePortfolioRepository) {
     private val filePickerProvider: FilePickerProvider = FilePickerProvider.aNew()
 
     fun run(args: Array<String>) {
-        val file = filePickerProvider.request()
-        val portfolio = parsePortfolio(file)
+        val fundsFile = filePickerProvider.request("funds")
+        val cashFile = filePickerProvider.request("cash")
+        val portfolio = parsePortfolio(fundsFile, cashFile)
         val output = savePortfolio(portfolio)
         println("printed to file " + output)
     }
@@ -25,12 +27,16 @@ class R4FundsParser(private val portfolioRepo: FilePortfolioRepository) {
         return output
     }
 
-    private fun parsePortfolio(file: String): Portfolio {
-        val portfolio = ParseFunds(FileUtils.readAllLinesAsString(Paths.get(file))).run()
-        return portfolio
+    private fun parsePortfolio(fundsFile: String, cashFile: String): Portfolio {
+        val portfolio = ParseFunds(contentsFrom(fundsFile)).run()
+        val completePortfolio = portfolio.add(ParseCash(contentsFrom(cashFile)).run())
+        return completePortfolio
     }
 
+    private fun contentsFrom(fundsFile: String) = FileUtils.readAllLinesAsString(Paths.get(fundsFile))
+
 }
+
 fun main(args: Array<String>) {
     R4FundsParser(FilePortfolioRepository()).run(args)
 }
