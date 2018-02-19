@@ -2,7 +2,9 @@ package com.gmaur.investment.r4automator.infrastructure.portfolio
 
 import com.gmaur.investment.r4automator.domain.Cash
 import com.gmaur.investment.r4automator.domain.Fund
+import org.springframework.stereotype.Component
 
+@Component
 class PortfolioMapper {
     fun toDTO(portfolio: Portfolio): PortfolioDTO {
         return PortfolioDTO(portfolio.assets.map {
@@ -22,7 +24,7 @@ class PortfolioMapper {
 }
 
 interface AssetDTO
-data class PortfolioDTO(val listOf: List<AssetDTO>)
+data class PortfolioDTO(val assets: List<AssetDTO>)
 data class CashDTO(val value: String) : AssetDTO {
     val type = "cash"
 }
