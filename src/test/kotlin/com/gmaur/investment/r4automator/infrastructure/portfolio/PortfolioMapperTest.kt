@@ -11,9 +11,13 @@ class PortfolioMapperTest {
     @Test
     fun `convert a portfolio`() {
         val mapper = PortfolioMapper()
-        val portfolio = Portfolio(listOf(Asset(ISIN("LU1"), Amount(BigDecimal.valueOf(1L)))))
+        val portfolio = Portfolio(listOf(
+                Asset(ISIN("LU1"), Amount(BigDecimal.valueOf(1L))),
+                Asset(ISIN("LU2"), Amount(BigDecimal.valueOf(2L)))))
 
-        assertThat(mapper.toDTO(portfolio)).isEqualTo(PortfolioDTO(listOf(AssetDTO(isin = "LU1", price = "1.00"))))
+        assertThat(mapper.toDTO(portfolio)).isEqualTo(PortfolioDTO(listOf(
+                AssetDTO(isin = "LU1", price = "1.00"),
+                AssetDTO(isin = "LU2", price = "2.00"))))
     }
 }
 
