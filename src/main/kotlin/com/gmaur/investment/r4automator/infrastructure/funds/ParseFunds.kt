@@ -2,6 +2,7 @@ package com.gmaur.investment.r4automator.infrastructure.funds
 
 import com.gmaur.investment.r4automator.domain.Amount
 import com.gmaur.investment.r4automator.domain.Asset
+import com.gmaur.investment.r4automator.domain.Fund
 import com.gmaur.investment.r4automator.domain.ISIN
 import com.gmaur.investment.r4automator.infrastructure.portfolio.Portfolio
 import org.jsoup.Jsoup
@@ -26,7 +27,7 @@ class ParseFunds(val rawHtml: String) {
                 var valueElement = element.getElementsByTag("td").flatMap { it -> it.getElementsByClass("fndVal_CNT_PATRIMONIO") }.first()
 
                 val value = valueElement.attr("data-fndval")
-                Asset(isin, Amount(BigDecimal(value)))
+                Fund(isin, Amount(BigDecimal(value)))
             }
         }
 
