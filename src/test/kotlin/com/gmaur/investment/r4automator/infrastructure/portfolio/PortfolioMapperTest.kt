@@ -3,6 +3,7 @@ package com.gmaur.investment.r4automator.infrastructure.portfolio
 import com.gmaur.investment.r4automator.domain.Amount
 import com.gmaur.investment.r4automator.domain.Fund
 import com.gmaur.investment.r4automator.domain.ISIN
+import com.gmaur.investment.r4automator.domain.Portfolio
 import com.gmaur.investment.r4automator.infrastructure.parsefunds.FundsObjectMother
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before

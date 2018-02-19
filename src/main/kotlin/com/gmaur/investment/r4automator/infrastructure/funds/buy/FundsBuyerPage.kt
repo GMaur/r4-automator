@@ -1,8 +1,9 @@
-package com.gmaur.investment.r4automator.infrastructure.funds
+package com.gmaur.investment.r4automator.infrastructure.funds.buy
 
 import com.gmaur.investment.r4automator.app.UserInteraction
 import com.gmaur.investment.r4automator.domain.ISIN
 import com.gmaur.investment.r4automator.infrastructure.files.FileUtils
+import com.gmaur.investment.r4automator.infrastructure.funds.FundsConfiguration
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement

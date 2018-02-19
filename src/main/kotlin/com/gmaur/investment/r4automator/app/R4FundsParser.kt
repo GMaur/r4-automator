@@ -1,11 +1,11 @@
 package com.gmaur.investment.r4automator.app
 
+import com.gmaur.investment.r4automator.domain.Portfolio
 import com.gmaur.investment.r4automator.infrastructure.cash.parse.ParseCash
 import com.gmaur.investment.r4automator.infrastructure.files.FilePickerProvider
 import com.gmaur.investment.r4automator.infrastructure.files.FileUtils
-import com.gmaur.investment.r4automator.infrastructure.funds.FilePortfolioRepository
-import com.gmaur.investment.r4automator.infrastructure.funds.ParseFunds
-import com.gmaur.investment.r4automator.infrastructure.portfolio.Portfolio
+import com.gmaur.investment.r4automator.infrastructure.funds.parse.ParseFunds
+import com.gmaur.investment.r4automator.infrastructure.portfolio.FilePortfolioRepository
 import java.io.File
 import java.nio.file.Paths
 

@@ -2,6 +2,7 @@ package com.gmaur.investment.r4automator.infrastructure.portfolio
 
 import com.gmaur.investment.r4automator.domain.Cash
 import com.gmaur.investment.r4automator.domain.Fund
+import com.gmaur.investment.r4automator.domain.Portfolio
 import org.springframework.stereotype.Component
 
 @Component

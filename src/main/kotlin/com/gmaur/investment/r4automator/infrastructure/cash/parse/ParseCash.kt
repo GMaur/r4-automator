@@ -2,7 +2,7 @@ package com.gmaur.investment.r4automator.infrastructure.cash.parse
 
 import com.gmaur.investment.r4automator.domain.Amount
 import com.gmaur.investment.r4automator.domain.Cash
-import com.gmaur.investment.r4automator.infrastructure.portfolio.Portfolio
+import com.gmaur.investment.r4automator.domain.Portfolio
 import org.jsoup.Jsoup
 import java.math.BigDecimal
 

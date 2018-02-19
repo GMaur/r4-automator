@@ -3,9 +3,9 @@ package com.gmaur.investment.r4automator.app
 import com.gmaur.investment.r4automator.domain.ISIN
 import com.gmaur.investment.r4automator.infrastructure.cash.CashConfiguration
 import com.gmaur.investment.r4automator.infrastructure.cash.parse.CashParserPage
-import com.gmaur.investment.r4automator.infrastructure.funds.FundsBuyerPage
 import com.gmaur.investment.r4automator.infrastructure.funds.FundsConfiguration
-import com.gmaur.investment.r4automator.infrastructure.funds.FundsPage
+import com.gmaur.investment.r4automator.infrastructure.funds.buy.FundsBuyerPage
+import com.gmaur.investment.r4automator.infrastructure.funds.parse.FundsPage
 import com.gmaur.investment.r4automator.infrastructure.login.LoginConfiguration
 import com.gmaur.investment.r4automator.infrastructure.login.LoginPage
 import com.gmaur.investment.r4automator.infrastructure.twofactorauth.TwoFactorAuthenticationPage
