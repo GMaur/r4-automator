@@ -5,13 +5,20 @@ import com.gmaur.investment.r4automator.domain.Fund
 import com.gmaur.investment.r4automator.domain.ISIN
 import com.gmaur.investment.r4automator.infrastructure.parsefunds.FundsObjectMother
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.Before
 import org.junit.Test
 import java.math.BigDecimal
 
 class PortfolioMapperTest {
+    private var mapper = PortfolioMapper()
+
+    @Before
+    fun setUp() {
+        mapper = PortfolioMapper()
+    }
+
     @Test
     fun `convert a portfolio`() {
-        val mapper = PortfolioMapper()
         val portfolio = Portfolio(listOf(
                 Fund(ISIN("LU1"), Amount(BigDecimal.valueOf(1L))),
                 Fund(ISIN("LU2"), Amount(BigDecimal.valueOf(2L)))))
@@ -25,11 +32,10 @@ class PortfolioMapperTest {
 
     @Test
     fun `convert another portfolio`() {
-        val mapper = PortfolioMapper()
         val portfolio = Portfolio(FundsObjectMother.funds_sample_1())
 
         val dto = mapper.toDTO(portfolio)
-        
+
         assertThat(dto).isEqualTo(PortfolioDTO(listOf(
                 FundDTO(isin = "LU1050469367", price = "0.00"),
                 FundDTO(isin = "LU1050470373", price = "99999.99"),
