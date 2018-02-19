@@ -1,9 +1,9 @@
 package com.gmaur.investment.r4automator.infrastructure.parsefunds
 
+import com.gmaur.investment.r4automator.domain.Portfolio
 import com.gmaur.investment.r4automator.infrastructure.files.FileUtils
-import com.gmaur.investment.r4automator.infrastructure.funds.ParseFunds
+import com.gmaur.investment.r4automator.infrastructure.funds.parse.ParseFunds
 import com.gmaur.investment.r4automator.infrastructure.parsefunds.FundsObjectMother.funds_sample_1
-import com.gmaur.investment.r4automator.infrastructure.portfolio.Portfolio
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import java.nio.file.Paths

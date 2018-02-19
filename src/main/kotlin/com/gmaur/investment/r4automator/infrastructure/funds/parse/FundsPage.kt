@@ -1,6 +1,7 @@
-package com.gmaur.investment.r4automator.infrastructure.funds
+package com.gmaur.investment.r4automator.infrastructure.funds.parse
 
 import com.gmaur.investment.r4automator.infrastructure.files.FileUtils
+import com.gmaur.investment.r4automator.infrastructure.funds.FundsConfiguration
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.PageFactory
 import java.net.URI

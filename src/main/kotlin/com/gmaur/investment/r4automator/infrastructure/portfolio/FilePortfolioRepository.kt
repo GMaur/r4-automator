@@ -1,10 +1,9 @@
-package com.gmaur.investment.r4automator.infrastructure.funds
+package com.gmaur.investment.r4automator.infrastructure.portfolio
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import com.gmaur.investment.r4automator.infrastructure.portfolio.Portfolio
-import com.gmaur.investment.r4automator.infrastructure.portfolio.PortfolioMapper
+import com.gmaur.investment.r4automator.domain.Portfolio
 import java.io.File
 
 class FilePortfolioRepository {

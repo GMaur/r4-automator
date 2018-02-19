@@ -1,7 +1,8 @@
 package com.gmaur.investment.r4automator.infrastructure.funds
 
+import com.gmaur.investment.r4automator.domain.Portfolio
 import com.gmaur.investment.r4automator.infrastructure.parsefunds.FundsObjectMother.funds_sample_1
-import com.gmaur.investment.r4automator.infrastructure.portfolio.Portfolio
+import com.gmaur.investment.r4automator.infrastructure.portfolio.FilePortfolioRepository
 import org.apache.tika.metadata.Metadata
 import org.apache.tika.parser.AutoDetectParser
 import org.assertj.core.api.Assertions

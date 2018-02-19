@@ -1,9 +1,11 @@
 package com.gmaur.investment.r4automator.app
 
 import com.gmaur.investment.r4automator.domain.ISIN
-import com.gmaur.investment.r4automator.infrastructure.funds.FundsBuyerPage
+import com.gmaur.investment.r4automator.infrastructure.cash.CashConfiguration
+import com.gmaur.investment.r4automator.infrastructure.cash.parse.CashParserPage
 import com.gmaur.investment.r4automator.infrastructure.funds.FundsConfiguration
-import com.gmaur.investment.r4automator.infrastructure.funds.FundsPage
+import com.gmaur.investment.r4automator.infrastructure.funds.buy.FundsBuyerPage
+import com.gmaur.investment.r4automator.infrastructure.funds.parse.FundsPage
 import com.gmaur.investment.r4automator.infrastructure.login.LoginConfiguration
 import com.gmaur.investment.r4automator.infrastructure.login.LoginPage
 import com.gmaur.investment.r4automator.infrastructure.twofactorauth.TwoFactorAuthenticationPage
@@ -26,7 +28,12 @@ import java.math.BigDecimal
 @EnableAutoConfiguration
 @Import(TwoFactorAuthenticationProviderConfiguration::class)
 @ComponentScan(basePackages = arrayOf("com.gmaur.investment.r4automator"))
-class R4AutomatorApplication(private val driver: WebDriver, private val fundsConfiguration: FundsConfiguration, private val loginConfiguration: LoginConfiguration) :
+class R4AutomatorApplication(
+        private val driver: WebDriver,
+        private val fundsConfiguration: FundsConfiguration,
+        private val loginConfiguration: LoginConfiguration,
+        private val cashConfiguration: CashConfiguration
+) :
         ApplicationRunner {
 
     @Autowired
@@ -37,6 +44,7 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
         logIn(loginConfiguration)
         enable2FA()
         parseFunds(fundsConfiguration)
+        parseCash(cashConfiguration)
         buyFunds(fundsConfiguration)
 
         this.driver.close()
@@ -50,8 +58,12 @@ class R4AutomatorApplication(private val driver: WebDriver, private val fundsCon
         protect { FundsBuyerPage(driver, UserInteraction, fundsConfiguration).buy(purchaseOrder2) }
     }
 
-    private fun parseFunds(fundsConfiguration: FundsConfiguration): String {
-        return protect { FundsPage(this.driver, fundsConfiguration).parse() }!!
+    private fun parseFunds(fundsConfiguration: FundsConfiguration) {
+        protect { FundsPage(this.driver, fundsConfiguration).parse() }
+    }
+
+    private fun parseCash(cashConfiguration: CashConfiguration) {
+        protect { CashParserPage(this.driver, cashConfiguration).parse() }
     }
 
     private fun enable2FA() {

@@ -1,10 +1,6 @@
-package com.gmaur.investment.r4automator.infrastructure.funds
+package com.gmaur.investment.r4automator.infrastructure.funds.parse
 
-import com.gmaur.investment.r4automator.domain.Amount
-import com.gmaur.investment.r4automator.domain.Asset
-import com.gmaur.investment.r4automator.domain.Fund
-import com.gmaur.investment.r4automator.domain.ISIN
-import com.gmaur.investment.r4automator.infrastructure.portfolio.Portfolio
+import com.gmaur.investment.r4automator.domain.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.math.BigDecimal
