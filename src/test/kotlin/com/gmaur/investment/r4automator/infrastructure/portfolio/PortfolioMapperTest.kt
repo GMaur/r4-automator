@@ -16,7 +16,9 @@ class PortfolioMapperTest {
                 Fund(ISIN("LU1"), Amount(BigDecimal.valueOf(1L))),
                 Fund(ISIN("LU2"), Amount(BigDecimal.valueOf(2L)))))
 
-        assertThat(mapper.toDTO(portfolio)).isEqualTo(PortfolioDTO(listOf(
+        val dto = mapper.toDTO(portfolio)
+
+        assertThat(dto).isEqualTo(PortfolioDTO(listOf(
                 FundDTO(isin = "LU1", price = "1.00"),
                 FundDTO(isin = "LU2", price = "2.00"))))
     }
@@ -26,7 +28,9 @@ class PortfolioMapperTest {
         val mapper = PortfolioMapper()
         val portfolio = Portfolio(FundsObjectMother.funds_sample_1())
 
-        assertThat(mapper.toDTO(portfolio)).isEqualTo(PortfolioDTO(listOf(
+        val dto = mapper.toDTO(portfolio)
+        
+        assertThat(dto).isEqualTo(PortfolioDTO(listOf(
                 FundDTO(isin = "LU1050469367", price = "0.00"),
                 FundDTO(isin = "LU1050470373", price = "99999.99"),
                 FundDTO(isin = "LU0996177134", price = "0.00"),
