@@ -31,17 +31,18 @@ class R4Reader(
 
     @PostMapping("login")
     fun login(@RequestBody loginRequest: LoginRequest): ResponseEntity<*> {
-        loginConfiguration.nif = loginRequest.nif
-        loginConfiguration.username = loginRequest.username
-        loginConfiguration.password = loginRequest.password
-        logIn(loginConfiguration)
-        return ResponseEntity.ok().build<Any>()
+        // TODO AGB: find a safe way to store + send credentials - for the moment in the private.properties
+//        loginConfiguration.nif = loginRequest.nif
+//        loginConfiguration.username = loginRequest.username
+//        loginConfiguration.password = loginRequest.password
+        val pageSource = logIn(loginConfiguration)
+        return ResponseEntity.ok(pageSource)
     }
 
     @PostMapping("2fa")
     fun twofa(@RequestBody secondFactor: TwoFactorAuthRequest): ResponseEntity<Any>? {
-        enable2FA(secondFactor.otp)
-        return ResponseEntity.ok().build<Any>()
+        val pageSource = enable2FA(secondFactor.otp)
+        return ResponseEntity.ok(pageSource)
     }
 
     @GetMapping("scrapes/funds")
@@ -62,18 +63,22 @@ class R4Reader(
         return protect { CashParserPage(this.driver, cashConfiguration).parse() }!!
     }
 
-    private fun enable2FA(secondFactor: String) {
-        protect {
+    private fun enable2FA(secondFactor: String): String {
+        return protect {
             TwoFactorAuthenticationPage(this.driver).enable(object : TwoFactorAuthenticationProvider {
                 override fun request(): String {
                     return secondFactor
                 }
-            })
-        }
+            }).pageSource()
+        }!!
     }
 
-    private fun logIn(loginConfiguration: LoginConfiguration) {
-        protect { LoginPage(this.driver, UserInteraction).login(loginConfiguration) }
+    private fun logIn(loginConfiguration: LoginConfiguration): String {
+        return protect {
+            val loginPage = LoginPage(this.driver, UserInteraction)
+            val afterLogin = loginPage.login(loginConfiguration)
+            afterLogin.pageSource()
+        }!!
     }
 
     private fun <T> protect(f: () -> T): T? {

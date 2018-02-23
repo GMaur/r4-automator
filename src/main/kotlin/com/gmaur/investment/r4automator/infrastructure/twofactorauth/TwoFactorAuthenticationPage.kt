@@ -18,6 +18,8 @@ class TwoFactorAuthenticationPage(private val driver: WebDriver) {
         // driver.findElement(By.id("2fa")).findElement(By.tagName("img")).getAttribute("src")
         //assert to "https://www.r4.com/recursos/images/mw-images/icon-2fa-operativa.png-operativa.png"
 
+    fun pageSource(): String {
+        return driver.pageSource
     }
 
     private fun insertSecondFactor(password: String) {
