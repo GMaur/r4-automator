@@ -22,7 +22,7 @@ class LoginPage(private val driver: WebDriver, private val userInteraction: User
         PageFactory.initElements(driver, this)
     }
 
-    fun login(config: LoginConfiguration) {
+    fun login(config: LoginConfiguration): LoginPage {
         driver.get(URI(config.url).toString())
         username(config.username)
         password(config.password)
@@ -31,6 +31,11 @@ class LoginPage(private val driver: WebDriver, private val userInteraction: User
         if (shouldLogin) {
             submitForm()
         }
+        return this
+    }
+
+    fun pageSource(): String {
+        return driver.pageSource
     }
 
     private fun nif(value: String) {

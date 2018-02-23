@@ -37,7 +37,7 @@ class R4FundsBuyer(
         val map = it.values
                 .filter { it is FundPurchase }
                 .map { it as FundPurchase }
-                .map { Pair(it, service.mock(it)) }
+                .map { Pair(it, service.perform(it)) }
 
         val result = map.map { (a, b) ->
             OperationOutcome(a, b.map { FileUtils.readAllLinesAsString(it) })
