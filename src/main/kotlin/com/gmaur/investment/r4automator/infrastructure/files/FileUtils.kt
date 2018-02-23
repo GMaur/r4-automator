@@ -1,25 +1,28 @@
 package com.gmaur.investment.r4automator.infrastructure.files
 
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStreamReader
 import java.io.PrintStream
 import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.Paths
-import java.util.*
 
 object FileUtils {
     fun readAllLinesAsString(path: Path): String {
         return Files.readAllLines(path).joinToString("")
     }
 
+    fun newFile(): Path {
+        return File.createTempFile("out", ".html").toPath()
+    }
+
     fun saveTemporaryFile(pageSource: String) {
-        val path = Paths.get("/tmp/out_" + Math.abs(Random().nextLong()) + ".html")
+        val path = newFile()
         saveFile(path, pageSource)
         println("Wrote temporal page source to " + path)
     }
 
-    private fun saveFile(path: Path?, pageSource: String) {
+    fun saveFile(path: Path, pageSource: String) {
         Files.write(path, pageSource.toByteArray())
     }
 }
