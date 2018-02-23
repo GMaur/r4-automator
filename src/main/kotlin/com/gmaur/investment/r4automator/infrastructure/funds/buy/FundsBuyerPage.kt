@@ -1,31 +1,38 @@
 package com.gmaur.investment.r4automator.infrastructure.funds.buy
 
+import arrow.core.Either
 import com.gmaur.investment.r4automator.app.UserInteraction
+import com.gmaur.investment.r4automator.domain.Amount
 import com.gmaur.investment.r4automator.domain.ISIN
-import com.gmaur.investment.r4automator.infrastructure.files.FileUtils
+import com.gmaur.investment.r4automator.infrastructure.files.FileUtils.newFile
+import com.gmaur.investment.r4automator.infrastructure.files.FileUtils.saveFile
 import com.gmaur.investment.r4automator.infrastructure.funds.FundsConfiguration
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import java.math.BigDecimal
+import java.nio.file.Path
 
 class FundsBuyerPage(private val driver: WebDriver, private val userInteraction: UserInteraction, private val fundsConfiguration: FundsConfiguration) {
     private val fromFundsAccount = By.cssSelector("#fondos-options > td:nth-child(1)")
 
-    fun buy(purchaseOrder: PurchaseOrder) {
+    fun buy(purchaseOrder: PurchaseOrder): Either<Exception, Path> {
         navigateToTheFundsPage()
         selectFund(purchaseOrder.isin)
         if (impossibleToSelectFromFunds()) {
-            println("Impossible to fulfill this purchase order" + purchaseOrder)
-            return
+            val message = "Impossible to fulfill this purchase order" + purchaseOrder
+            println(message)
+            return Either.left(RuntimeException(message))
         }
         selectFromFundsAccount()
         selectAmount(purchaseOrder.amount)
         acceptAllConditions()
         if (userInteraction.`confirm?`("confirm this operation?")) {
             confirmButton().click()
-            savePageSource()
+            val path = newFile()
+            savePageSource(path)
+            return Either.right(path)
         }
+        return Either.left(RuntimeException("the user did not confirm the operation"))
     }
 
     private fun navigateToTheFundsPage() {
@@ -37,11 +44,12 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
         return fromFundsAccount.getAttribute("class").contains("no-operativa")
     }
 
-    private fun savePageSource() {
-        FileUtils.saveTemporaryFile(driver.pageSource)
+    private fun savePageSource(path: Path) {
+        saveFile(path, driver.pageSource)
+        println("Wrote funds buyer page source to " + path)
     }
 
-    data class PurchaseOrder(val isin: ISIN, val amount: BigDecimal)
+    data class PurchaseOrder(val isin: ISIN, val amount: Amount)
 
     private fun acceptAllConditions() {
         val tables = driver.findElements(By.cssSelector("form > table"))
@@ -69,13 +77,13 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
         driver.switchTo().window(previousPage)
     }
 
-    private fun selectAmount(amount: BigDecimal) {
+    private fun selectAmount(amount: Amount) {
         typeAmount(amount)
         confirmButton().click()
     }
 
-    private fun typeAmount(amount: BigDecimal) {
-        driver.findElement(By.id("IMPORTE_FONDO_1")).sendKeys(amount.toString())
+    private fun typeAmount(amount: Amount) {
+        driver.findElement(By.id("IMPORTE_FONDO_1")).sendKeys(amount.value.toString())
     }
 
     private fun confirmButton() = driver.findElement(By.id("B_ENVIAR_ORD"))

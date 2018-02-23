@@ -2,41 +2,51 @@ package com.gmaur.investment.r4automator.app
 
 import com.gmaur.investment.r4automator.domain.Portfolio
 import com.gmaur.investment.r4automator.infrastructure.cash.parse.ParseCash
-import com.gmaur.investment.r4automator.infrastructure.files.FilePickerProvider
 import com.gmaur.investment.r4automator.infrastructure.files.FileUtils
 import com.gmaur.investment.r4automator.infrastructure.funds.parse.ParseFunds
-import com.gmaur.investment.r4automator.infrastructure.portfolio.FilePortfolioRepository
-import java.io.File
+import com.gmaur.investment.r4automator.infrastructure.portfolio.PortfolioDTO
+import com.gmaur.investment.r4automator.infrastructure.portfolio.PortfolioMapper
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import java.nio.file.Files
 import java.nio.file.Paths
 
-class R4FundsParser(private val portfolioRepo: FilePortfolioRepository) {
 
-    private val filePickerProvider: FilePickerProvider = FilePickerProvider.aNew()
+@RestController
+class R4FundsParser {
 
-    fun run(args: Array<String>) {
-        val fundsFile = filePickerProvider.request("funds")
-        val cashFile = filePickerProvider.request("cash")
-        val portfolio = parsePortfolio(fundsFile, cashFile)
-        val output = savePortfolio(portfolio)
-        println("printed to file " + output)
-    }
+    @PostMapping("parse")
+    fun run(
+            @RequestParam("funds", required = true) funds: MultipartFile,
+            @RequestParam("cash", required = true) cash: MultipartFile,
+            redirectAttributes: RedirectAttributes): PortfolioDTO {
 
-    private fun savePortfolio(portfolio: Portfolio): File? {
-        val output = File.createTempFile("temp", "tmp")
-        portfolioRepo.save(portfolio, output)
-        return output
+        val tempFileFunds = Files.createTempFile("funds", ".tmp")
+        funds.transferTo(tempFileFunds.toFile())
+
+        val tempFileCash = Files.createTempFile("cash", ".tmp")
+        cash.transferTo(tempFileCash.toFile())
+
+        val portfolio = parsePortfolio(tempFileFunds.toAbsolutePath().toString(), tempFileCash.toAbsolutePath().toString())
+        val dtoMapper = PortfolioMapper()
+        return dtoMapper.toDTO(portfolio)
     }
 
     private fun parsePortfolio(fundsFile: String, cashFile: String): Portfolio {
-        val portfolio = ParseFunds(contentsFrom(fundsFile)).run()
-        val completePortfolio = portfolio.add(ParseCash(contentsFrom(cashFile)).run())
+        val rawFunds = contentsFrom(fundsFile)
+        val rawCash = contentsFrom(cashFile)
+        return portfolio(rawFunds, rawCash)
+    }
+
+    private fun portfolio(rawFunds: String, rawCash: String): Portfolio {
+        val portfolio = ParseFunds(rawFunds).run()
+        val completePortfolio = portfolio.add(ParseCash(rawCash).run())
         return completePortfolio
     }
 
     private fun contentsFrom(fundsFile: String) = FileUtils.readAllLinesAsString(Paths.get(fundsFile))
 
-}
-
-fun main(args: Array<String>) {
-    R4FundsParser(FilePortfolioRepository()).run(args)
 }

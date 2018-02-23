@@ -6,16 +6,18 @@ import org.openqa.selenium.WebDriver
 
 class CashParserPage(private val driver: WebDriver, private val cashConfiguration: CashConfiguration) {
 
-    fun parse() {
+    fun parse(): String? {
         navigateToThePage()
-        savePageSource()
+        return savePageSource()
     }
 
     private fun navigateToThePage() {
         driver.get(cashConfiguration.cashurl)
     }
 
-    private fun savePageSource() {
-        FileUtils.saveTemporaryFile(driver.pageSource)
+    private fun savePageSource(): String? {
+        val pageSource = driver.pageSource
+        FileUtils.saveTemporaryFile(pageSource)
+        return pageSource
     }
 }
