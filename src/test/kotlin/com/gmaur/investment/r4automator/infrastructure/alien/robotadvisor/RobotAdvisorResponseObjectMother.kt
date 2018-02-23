@@ -1,9 +1,8 @@
 package com.gmaur.investment.r4automator.infrastructure.alien.robotadvisor
 
-class RobotAdvisorResponseObjectMother {
-    companion object {
-        fun valid(): String {
-            val operationsJSON = """
+object RobotAdvisorResponseObjectMother {
+    fun valid(): String {
+        val operationsJSON = """
 {
   "operations" : [ {
     "type" : "purchase",
@@ -28,8 +27,6 @@ class RobotAdvisorResponseObjectMother {
   } ]
 }
 """
-            return operationsJSON
-        }
+        return operationsJSON
     }
-
 }
