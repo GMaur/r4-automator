@@ -36,8 +36,7 @@ class R4Reader(
 //        loginConfiguration.username = loginRequest.username
 //        loginConfiguration.password = loginRequest.password
         val pageSource = logIn(loginConfiguration)
-        return ResponseEntity.ok(pageSource)
-    }
+        return ResponseEntity.ok(pageSource)    }
 
     @PostMapping("2fa")
     fun twofa(@RequestBody secondFactor: TwoFactorAuthRequest): ResponseEntity<Any>? {
