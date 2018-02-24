@@ -1,6 +1,6 @@
-# Renta4 Automator
+# Renta4 (R4) Automator
 
-Automates the interaction with the [Renta4 broker](https://r4.com).
+Automates the interaction with the [Renta4 broker](https://r4.com). A part of [Robot Advisor](https://github.com/RobotAdvisor) (GMaur's Investment Ideas)
 
 As far as I know, there is no public API. (If you know about one, please send me a message / issue)
 
@@ -9,8 +9,9 @@ As far as I know, there is no public API. (If you know about one, please send me
 ### In scope
 
   * Login (including two-factor authentication)
-  * Read the assets from the Funds (fondos) page.
-  * Generating a portfolio in a common format (e.g., for further processing)
+  * Read the illiquid assets from the Funds ('fondos') page.
+  * Read the liquid assets from the Assets ('patrimonio') page.
+  * Generating a portfolio in a common format (e.g., for further processing). Including all the parsed assets
 
 ### Out of scope 
 
@@ -34,4 +35,4 @@ project, please contact us (message / issue).
 
 ### Reaching us
 
-Please send a message (e.g., [twitter](https://twitter.com/alvarobiz)) or an [issue](https://github.com/alvarogarcia7/r4-automator/issues)
+Please send a message (e.g., [twitter](https://twitter.com/alvarobiz)) or an [issue](https://github.com/gmaur/r4-automator/issues)
