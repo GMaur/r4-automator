@@ -33,6 +33,7 @@ class TwoFactorAuthenticationPage(private val driver: WebDriver) {
     }
 
     private fun insertSecondFactor(password: String) {
+        driver.findElement(By.id("COD")).clear()
         driver.findElement(By.id("COD")).sendKeys(password)
     }
 
