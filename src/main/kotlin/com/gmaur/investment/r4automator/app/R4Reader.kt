@@ -13,6 +13,7 @@ import com.gmaur.investment.r4automator.infrastructure.webdriver.WebDriverUtils
 import org.openqa.selenium.WebDriver
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -36,12 +37,17 @@ class R4Reader(
 //        loginConfiguration.username = loginRequest.username
 //        loginConfiguration.password = loginRequest.password
         val pageSource = logIn(loginConfiguration)
-        return ResponseEntity.ok(pageSource)    }
+        return ResponseEntity.ok(pageSource)
+    }
 
     @PostMapping("2fa")
     fun twofa(@RequestBody secondFactor: TwoFactorAuthRequest): ResponseEntity<Any>? {
-        val pageSource = enable2FA(secondFactor.otp)
-        return ResponseEntity.ok(pageSource)
+        val success = enable2FA(secondFactor.otp)
+        return if (success) {
+            ResponseEntity.ok().build()
+        } else {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+        }
     }
 
     @GetMapping("scrapes/funds")
@@ -62,13 +68,13 @@ class R4Reader(
         return protect { CashParserPage(this.driver, cashConfiguration).parse() }!!
     }
 
-    private fun enable2FA(secondFactor: String): String {
+    private fun enable2FA(secondFactor: String): Boolean {
         return protect {
             TwoFactorAuthenticationPage(this.driver).enable(object : TwoFactorAuthenticationProvider {
                 override fun request(): String {
                     return secondFactor
                 }
-            }).pageSource()
+            }).has2FAEnabled()
         }!!
     }
 
