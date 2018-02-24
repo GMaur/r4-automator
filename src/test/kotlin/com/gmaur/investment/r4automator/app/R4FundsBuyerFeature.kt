@@ -15,17 +15,22 @@ import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.openqa.selenium.WebDriver
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.Configuration
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit4.SpringRunner
+import java.nio.file.Path
 
 
 @RunWith(SpringRunner::class)
 @EnableAutoConfiguration()
-@ContextConfiguration(classes = [FundsConfiguration::class, LoginConfiguration::class])
+@ContextConfiguration(classes = [FundsConfiguration::class, LoginConfiguration::class, FakeOperationPerformerService::class])
 @ComponentScan(basePackages = ["com.gmaur.investment.r4automator"])
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class R4FundsBuyerFeature {
@@ -75,6 +80,22 @@ class R4FundsBuyerFeature {
             return Either.left(e)
         }
 
+    }
+
+}
+
+@Configuration
+class FakeOperationPerformerService {
+    @Autowired
+    var driver: WebDriver? = null
+
+    @Bean
+    fun fundsOperationPerformerService(): FundsOperationPerformerService {
+        return object : com.gmaur.investment.r4automator.app.FundsOperationPerformerService(driver!!, FundsConfiguration()) {
+            override fun perform(fund: FundPurchase): Either<Exception, Path> {
+                return Either.left(RuntimeException())
+            }
+        }
     }
 
 }
