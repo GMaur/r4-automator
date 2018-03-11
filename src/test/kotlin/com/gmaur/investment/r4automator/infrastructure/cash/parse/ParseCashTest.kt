@@ -19,6 +19,14 @@ class ParseCashTest {
         Assertions.assertThat(funds).isEqualTo(Portfolio(listOf(Cash(Amount(BigDecimal("9999.99"))))))
     }
 
+    @Test
+    fun `parse the funds from sample with long numbers`() {
+        val rawHtml = readContents("patrimonio_long-numbers.html")
+        var funds = ParseCash(rawHtml).run()
+
+        Assertions.assertThat(funds).isEqualTo(Portfolio(listOf(Cash(Amount(BigDecimal("19999.99"))))))
+    }
+
 
     private fun readContents(file: String): String {
         val get = inTestClasses(file)

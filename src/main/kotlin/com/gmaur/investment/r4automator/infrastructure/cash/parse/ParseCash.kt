@@ -18,6 +18,7 @@ class ParseCash(val rawHtml: String) {
                 .map { it.text() }
                 .filter { it != "" }
                 .first()
+                .replace(".", "")
                 .replace("€", "")
                 .replace(",", ".")
                 .trim()
