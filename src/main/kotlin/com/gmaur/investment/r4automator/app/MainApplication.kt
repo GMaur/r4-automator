@@ -1,6 +1,8 @@
 package com.gmaur.investment.r4automator.app
 
 import com.gmaur.investment.r4automator.infrastructure.twofactorauth.TwoFactorAuthenticationProviderConfiguration
+import org.springframework.boot.ApplicationArguments
+import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.context.annotation.ComponentScan
@@ -12,7 +14,13 @@ import kotlin.system.exitProcess
 @EnableAutoConfiguration
 @Import(TwoFactorAuthenticationProviderConfiguration::class)
 @ComponentScan(basePackages = arrayOf("com.gmaur.investment.r4automator"))
-class MainApplication
+class MainApplication : ApplicationRunner {
+    @Throws(Exception::class)
+    override fun run(args: ApplicationArguments) {
+        println("✓✅ Application running!")
+        //TODO AGB healtcheck
+    }
+}
 
 fun main(args: Array<String>) {
     if (!inDebugMode()) {
