@@ -26,7 +26,7 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
         selectFromFundsAccount()
         selectAmount(purchaseOrder.amount)
         acceptAllConditions()
-        if (userInteraction.`confirm?`("confirm this operation?")) {
+        if (userInteraction.`confirm?`("**WARNING**: Spending real money!!. Check the operation!!. confirm it?")) {
             confirmButton().click()
             val path = newFile()
             savePageSource(path)
