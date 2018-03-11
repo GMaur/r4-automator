@@ -86,7 +86,7 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
         driver.findElement(By.id("IMPORTE_FONDO_1")).sendKeys(amount.value.toString())
     }
 
-    private fun confirmButton() = driver.findElement(By.id("B_ENVIAR_ORD"))
+    private fun confirmButton() = driver.findElement(By.cssSelector("input[name='B_ENVIAR_ORD']"))
 
     private fun selectFromFundsAccount() {
         val fromFundsAccount = driver.findElement(fromFundsAccount)
