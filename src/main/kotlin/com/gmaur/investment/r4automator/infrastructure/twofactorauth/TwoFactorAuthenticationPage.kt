@@ -3,6 +3,7 @@ package com.gmaur.investment.r4automator.infrastructure.twofactorauth
 import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.support.PageFactory
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
@@ -52,7 +53,10 @@ class TwoFactorAuthenticationPage(private val driver: WebDriver) {
     }
 
     private fun open2FAModal() {
-        driver.findElement(By.id("2fa")).click()
+        try {
+            driver.findElement(By.id("2fa")).click()
+        } catch (e: WebDriverException) {
+        }
     }
 
     private fun submitForm() {
