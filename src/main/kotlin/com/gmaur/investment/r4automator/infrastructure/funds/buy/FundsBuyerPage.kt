@@ -13,7 +13,7 @@ import org.openqa.selenium.WebElement
 import java.nio.file.Path
 
 class FundsBuyerPage(private val driver: WebDriver, private val userInteraction: UserInteraction, private val fundsConfiguration: FundsConfiguration) {
-    private val fromFundsAccount = By.cssSelector("#fondos-options > td:nth-child(1)")
+    private val fromFundsAccount = By.cssSelector("#fondos-options  a:nth-child(1)")
 
     fun buy(purchaseOrder: PurchaseOrder): Either<Exception, Path> {
         navigateToTheFundsPage()
@@ -63,11 +63,11 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
 
         goBackTo(previousPage)
 
-        acceptDisclaimers(tables)
+        acceptDisclaimers()
     }
 
-    private fun acceptDisclaimers(tables: MutableList<WebElement>) {
-        val disclaimers = tables.last()
+    private fun acceptDisclaimers() {
+        val disclaimers = driver.findElement(By.cssSelector("div.aceptacion"))
 
         //click on all disclaimers
         disclaimers.findElements(By.cssSelector("input[type='checkbox']")).forEach({ it.click() })
@@ -90,9 +90,7 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
 
     private fun selectFromFundsAccount() {
         val fromFundsAccount = driver.findElement(fromFundsAccount)
-        if (fromFundsAccount.findElement(By.tagName("a")).isEnabled) {
-            fromFundsAccount.click()
-        }
+        fromFundsAccount.click()
     }
 
     private fun selectFund(isin: ISIN) {
