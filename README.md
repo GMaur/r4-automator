@@ -36,3 +36,8 @@ project, please contact us (message / issue).
 ### Reaching us
 
 Please send a message (e.g., [twitter](https://twitter.com/alvarobiz)) or an [issue](https://github.com/gmaur/r4-automator/issues)
+
+### Implementation notes
+
+See IMPLEMENTATION-NOTES.md
+
