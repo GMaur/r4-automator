@@ -1,5 +1,7 @@
 # Glossary
 
+Note: not in order. Use the search function
+
   * (re)balancer: takes a portfolio and an asset allocation and suggests/calculates actions to rebalance them
   * portfolio: a collection of assets
   * asset: property of a client. E.g., stock, cash, ETF
