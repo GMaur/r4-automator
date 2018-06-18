@@ -24,6 +24,11 @@ It is currently out of scope:
   * Configuration (e.g., user, account, information)
   * Fiscal information (e.g., at the end of the fiscal year)
   * Anything not included in 'in scope'
+  * Other currencies (than EUR)
+  
+### Hypotheses
+
+  * All currencies are EURo
 
 ## Contributing
 
