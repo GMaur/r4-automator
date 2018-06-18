@@ -22,6 +22,7 @@ class TwoFactorAuthenticationPage(private val driver: WebDriver) {
             val code = provider.request()
             insertSecondFactor(code)
             submitForm()
+            refreshPage()
             println("new url = " + source())
             if (section(source()).hasBeenEnabled()) {
                 println("2FA has been activated")
@@ -32,6 +33,10 @@ class TwoFactorAuthenticationPage(private val driver: WebDriver) {
             println("2FA is apparently enabled already")
         }
         return this
+    }
+
+    private fun refreshPage() {
+        driver.navigate().refresh()
     }
 
     fun has2FAEnabled(): Boolean {
