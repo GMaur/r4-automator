@@ -36,7 +36,7 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
     }
 
     private fun navigateToTheFundsPage() {
-        driver.get(fundsConfiguration.fundsurl)
+        driver.get("${fundsConfiguration.fundsurl}&CORVUS=1") // corvus means "web beta"
     }
 
     private fun impossibleToSelectFromFunds(): Boolean {
@@ -52,14 +52,25 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
     data class PurchaseOrder(val isin: ISIN, val amount: Amount)
 
     private fun acceptAllConditions() {
-        val tables = driver.findElements(By.cssSelector("form > table"))
+        //Accept MIFID - maybe present
+        try {
+            val mifid = driver.findElements(By.cssSelector("form > table"))
+            val first = mifid.first()
+            val acceptButton = first.findElement(By.cssSelector("input[name='PB_ENVIAR']"))
+            acceptButton.click()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
-        val documentation = tables.first()
+
+        val allTables = driver.findElements(By.cssSelector("table"))
+
+        val documentation = allTables[2]
 
         val previousPage = driver.windowHandle
 
-        // opens in a new page
-        acceptDocumentation(documentation).click()
+        // opens multiple (2) new pages
+        acceptAllDocumentation(documentation)
 
         goBackTo(previousPage)
 
@@ -69,8 +80,12 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
     private fun acceptDisclaimers() {
         val disclaimers = driver.findElement(By.cssSelector("div.aceptacion"))
 
-        //click on all disclaimers
-        disclaimers.findElements(By.cssSelector("input[type='checkbox']")).forEach({ it.click() })
+        //accept all disclaimers
+        disclaimers
+                .findElements(By.cssSelector("input[type='checkbox']"))
+                // some buttons may be clicked when accepting previous conditions
+                .filterNot { it.getAttribute("checked") == "true" }
+                .forEach { it.click() }
     }
 
     private fun goBackTo(previousPage: String?) {
@@ -97,5 +112,11 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
         driver.findElement(By.cssSelector("tr[data-isin='" + isin.value + "']")).findElements(By.tagName("a")).last().click()
     }
 
-    private fun acceptDocumentation(table: WebElement) = table.findElements(By.tagName("a")).last()
+    private fun acceptAllDocumentation(table: WebElement) {
+        val links = table.findElements(By.tagName("a"))
+        links.reverse()
+        val (first, second) = links
+        first.click()
+        second.click()
+    }
 }
