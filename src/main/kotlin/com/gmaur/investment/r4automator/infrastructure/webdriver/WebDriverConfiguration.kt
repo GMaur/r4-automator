@@ -23,8 +23,8 @@ class WebDriverConfiguration {
         System.setProperty(nameDriver, pathDriver + exeDriver)
         var driver = ChromeDriver()
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
-        driver.manage().window().maximize()
-        driver.manage().window().fullscreen()
+//        driver.manage().window().maximize()
+//        driver.manage().window().fullscreen()
         return driver
 
     }
