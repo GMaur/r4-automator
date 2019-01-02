@@ -19,7 +19,7 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
         navigateToTheFundsPage()
         selectFund(purchaseOrder.isin)
         if (impossibleToSelectFromFunds()) {
-            val message = "Impossible to fulfill this purchase order" + purchaseOrder
+            val message = "Impossible to fulfill this purchase order $purchaseOrder"
             println(message)
             return Either.left(RuntimeException(message))
         }
