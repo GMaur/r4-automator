@@ -8,6 +8,7 @@ import com.gmaur.investment.r4automator.infrastructure.files.FileUtils.newFile
 import com.gmaur.investment.r4automator.infrastructure.files.FileUtils.saveFile
 import com.gmaur.investment.r4automator.infrastructure.funds.FundsConfiguration
 import org.openqa.selenium.By
+import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import java.nio.file.Path
@@ -109,6 +110,7 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
     }
 
     private fun selectFund(isin: ISIN) {
+        (driver as JavascriptExecutor).executeScript("window.scrollBy(0,450)", "")
         driver.findElement(By.cssSelector("tr[data-isin='" + isin.value + "']")).findElements(By.tagName("a")).last().click()
     }
 
