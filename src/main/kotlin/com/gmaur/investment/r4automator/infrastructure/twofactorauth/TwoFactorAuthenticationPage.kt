@@ -1,9 +1,6 @@
 package com.gmaur.investment.r4automator.infrastructure.twofactorauth
 
-import org.openqa.selenium.By
-import org.openqa.selenium.JavascriptExecutor
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebDriverException
+import org.openqa.selenium.*
 import org.openqa.selenium.support.PageFactory
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
@@ -14,7 +11,7 @@ class TwoFactorAuthenticationPage(private val driver: WebDriver) {
         PageFactory.initElements(driver, this)
     }
 
-    private fun source(): String = driver.findElement(By.id("2fa")).findElement(By.tagName("img")).getAttribute("src")
+    private fun source(): WebElement = driver.findElement(By.cssSelector("div.right-items")).findElements(By.cssSelector("a.nav-link.dropdown-toggle"))[1]!!
 
     fun enable(provider: TwoFactorAuthenticationProvider): TwoFactorAuthenticationPage {
         if (section(source()).isDisabled()) {
@@ -43,9 +40,24 @@ class TwoFactorAuthenticationPage(private val driver: WebDriver) {
         return section(source()).hasBeenEnabled()
     }
 
-    class section(private val imageURL: String) {
-        fun isDisabled() = imageURL.contains("-consultiva.png")
-        fun hasBeenEnabled() = imageURL.contains("-operativa.png")
+    class section(private val imageURL: WebElement) {
+        fun isDisabled(): Boolean {
+            return try {
+                imageURL.findElement(By.cssSelector(".consultiva"))
+                true
+            } catch (e: Exception) {
+                false
+            }
+        }
+
+        fun hasBeenEnabled(): Boolean {
+            return try {
+                imageURL.findElement(By.cssSelector(".operativa"))
+                true
+            } catch (e: Exception) {
+                false
+            }
+        }
     }
 
     fun pageSource(): String {
