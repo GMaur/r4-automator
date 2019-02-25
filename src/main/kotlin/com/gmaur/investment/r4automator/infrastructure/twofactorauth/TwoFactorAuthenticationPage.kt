@@ -19,7 +19,7 @@ class TwoFactorAuthenticationPage(private val driver: WebDriver) {
             val code = provider.request()
             insertSecondFactor(code)
             submitForm()
-            refreshPage()
+            closePossibleModals()
             println("new url = " + source())
             if (section(source()).hasBeenEnabled()) {
                 println("2FA has been activated")
@@ -32,8 +32,17 @@ class TwoFactorAuthenticationPage(private val driver: WebDriver) {
         return this
     }
 
-    private fun refreshPage() {
-        driver.navigate().refresh()
+    private fun closePossibleModals() {
+        try {
+            driver.findElements(By.cssSelector("div.r4helpwizard-close")).map { it.click() }
+        } catch (e:Exception){
+
+        }
+        try {
+            driver.findElements(By.cssSelector("div.r4icon-close"))[0].click()
+        } catch (e:Exception){
+
+        }
     }
 
     fun has2FAEnabled(): Boolean {
@@ -71,7 +80,8 @@ class TwoFactorAuthenticationPage(private val driver: WebDriver) {
 
     private fun open2FAModal() {
         try {
-            driver.findElement(By.id("2fa")).click()
+            val js: JavascriptExecutor = driver as JavascriptExecutor
+            js.executeScript("modalOpen()")
         } catch (e: WebDriverException) {
         }
     }

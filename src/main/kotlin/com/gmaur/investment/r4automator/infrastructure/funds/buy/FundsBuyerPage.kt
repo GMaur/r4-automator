@@ -28,6 +28,7 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
         selectAmount(purchaseOrder.amount)
         acceptAllConditions()
         if (userInteraction.`confirm?`("**WARNING**: Spending real money!!. Check the operation!!. confirm it?")) {
+            (driver as JavascriptExecutor).executeScript("window.scrollBy(0,450)", "")
             confirmButton().click()
             val path = newFile()
             savePageSource(path)
@@ -95,6 +96,7 @@ class FundsBuyerPage(private val driver: WebDriver, private val userInteraction:
 
     private fun selectAmount(amount: Amount) {
         typeAmount(amount)
+        (driver as JavascriptExecutor).executeScript("window.scrollBy(0,150)", "")
         confirmButton().click()
     }
 
